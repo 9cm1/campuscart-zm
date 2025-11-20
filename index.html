@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- PWA Manifest Connection -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#64ffda">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
+    <title>CampusCart</title>
+    <style>
+       
+        :root {
+            --dark-blue: #0a192f;
+            --navy: #112240;
+            --light-blue: #64ffda;
+            --text-light: #ccd6f6;
+            --text-gray: #8892b0;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: var(--text-light);
+            padding-bottom: 60px;
+        }
+
+        /* Header with logo, search, and cart */
+        .main-header {
+            background-color: var(--navy);
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-blue);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .search-container {
+            width: 100%;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .search-bar::placeholder {
+            color: var(--text-gray);
+        }
+
+        .search-bar:focus {
+            outline: 1px solid var(--light-blue);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main content */
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: var(--light-blue);
+            text-align: center;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: rgba(100, 255, 218, 0.05);
+            border: 1px solid var(--light-blue);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--text-light);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .product-price {
+            color: var(--light-blue);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart {
+            background-color: var(--navy);
+            color: var(--light-blue);
+            border: 1px solid var(--light-blue);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
+        }
+
+        /* Cart Sidebar - Fixed to right side */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background-color: var(--navy);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            background-color: var(--dark-blue);
+            color: var(--light-blue);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--light-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--dark-blue);
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .cart-item-price {
+            color: var(--light-blue);
+            font-weight: bold;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .quantity-btn {
+            background-color: var(--dark-blue);
+            color: var(--light-blue);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .quantity {
+            margin: 0 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .cart-total {
+            padding: 20px;
+            border-top: 1px solid var(--light-blue);
+            background-color: var(--dark-blue);
+        }
+
+        .total-amount {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--light-blue);
+        }
+
+        .checkout-btn {
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            opacity: 0.9;
+        }
+
+        .empty-cart-message {
+            text-align: center;
+            color: var(--text-gray);
+            margin-top: 50px;
+        }
+
+        /* Suggestion Box Styles */
+        .suggestion-section {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .suggestion-btn {
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .suggestion-btn:hover {
+            opacity: 0.9;
+        }
+
+        .suggestion-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .suggestion-box {
+            background-color: var(--navy);
+            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .suggestion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--light-blue);
+            padding-bottom: 10px;
+        }
+
+        .suggestion-title {
+            color: var(--light-blue);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .close-suggestion {
+            background: none;
+            border: none;
+            color: var(--light-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .suggestion-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--light-blue);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            margin-bottom: 15px;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .suggestion-input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .send-suggestion {
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .send-suggestion:hover {
+            opacity: 0.9;
+        }
+
+        /* Campus Selection Modal */
+        .campus-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .campus-box {
+            background-color: var(--navy);
+            border-radius: 10px;
+            padding: 20px;
+            width:85%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .campus-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--light-blue);
+            padding-bottom: 10px;
+        }
+
+        .campus-title {
+            color: var(--light-blue);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .close-campus {
+            background: none;
+            border: none;
+            color: var(--light-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .campus-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .campus-option {
+            background-color: var(--dark-blue);
+            color: var(--text-light);
+            border: 1px solid var(--light-blue);
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .campus-option:hover {
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
+        }
+
+        /* Light Theme Styles */
+        [data-theme="light"] {
+            --dark-blue: #f0f0f0;
+            --navy: #ffffff;
+            --light-blue: #0a192f;
+            --text-light: #333333;
+            --text-gray: #666666;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] body {
+            background-color: var(--dark-blue);
+            color: var(--text-light);
+        }
+
+        [data-theme="light"] .main-header {
+            background-color: var(--navy);
+            box-shadow: var(--shadow);
+        }
+
+        [data-theme="light"] .product-card {
+            background: rgba(10, 25, 47, 0.05);
+            border: 1px solid var(--light-blue);
+        }
+
+        [data-theme="light"] .search-bar {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+        }
+
+        [data-theme="light"] .cart-sidebar {
+            background-color: var(--navy);
+        }
+
+        [data-theme="light"] .cart-header {
+            background-color: var(--dark-blue);
+        }
+
+        [data-theme="light"] .cart-total {
+            background-color: var(--dark-blue);
+        }
+
+        [data-theme="light"] .suggestion-box {
+            background-color: var(--navy);
+        }
+
+        [data-theme="light"] .campus-box {
+            background-color: var(--navy);
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .logo-row {
+                margin-bottom: 0;
+                margin-right: 20px;
+            }
+            
+            .search-container {
+                flex: 1;
+                margin-right: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .cart-sidebar {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+            }
+            
+            .product-image {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with logo, search, and cart -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-row">
+                <div class="logo">Campus Cart</div>
+                <div class="header-controls">
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                    <div class="cart-icon">
+                        🛒 Cart
+                        <span class="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search groceries..." id="searchInput">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1>Available products</h1>
+        
+        <!-- Suggestion Button -->
+        <div class="suggestion-section">
+            <button class="suggestion-btn">+ Suggest a Product</button>
+        </div>
+
+        <div class="products">
+            <!-- Staples -->
+            <div class="product-card">
+                <img src="images/rice.jpg" alt="Rice" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Nakonde Rice (5kg)</div>
+                    <div class="product-price">ZMW 170</div>
+                    <button class="add-to-cart" data-id="1" data-name="Rice (5kg)" data-price="170" data-image="images/rice.jpg">Add to Cart</button>
+                </div>
+            </div>
+<div class="product-card">
+              <img src="images/nn.jpg" alt="Mealie Meal" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">eeZee Instant noodles(chicken)</div>
+                  <div class="product-price">ZMW 7</div>
+                  <button class="add-to-cart" data-id="2" data-name="noodles" data-price="7" data-image="images/nn.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <!-- Cooking Essentials -->
+          <div class="product-card">
+              <img src="images/s.jpg" alt="Cooking Oil" class="product-image">
+              <div class="product-info">
+                  <div class="product-name"> StarGold Cooking Oil (5L)</div>
+                  <div class="product-price">ZMW 261</div>
+                  <button class="add-to-cart" data-id="3" data-name="Cooking Oil (5L)" data-price="261" data-image="images/s.jpg">Add to Cart</button>
+              </div>
+          </div>
+          <div class="product-card">
+              <img src="images/r.jpg" alt="Ricoffy" class="product-image">
+              <div class="product-info">
+                  <div class="product-name"> Ricoffy (250g)</div>
+                   <div class="product-price">ZMW 77</div>
+                   <button class="add-to-cart" data-id="3" data-name="Ricoffy" data-price="77" data-image="images/r.jpg">Add to Cart</button>                   
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/g.jpg" alt="GLP" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Golden Leaves Peanut(1kg)</div>
+                  <div class="product-price">ZMW 84</div>
+                  <button class="add-to-cart" data-id="4" data-name="Golden Leaves Peanut(1kg)" data-price="84" data-image="images/g.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/fe.jpg" alt="GLP" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">FreshPikt Peanut(1kg)</div>
+                  <div class="product-price">ZMW 78</div>
+                  <button class="add-to-cart" data-id="5" data-name="FreshPikt Peanut(1kg)" data-price="78" data-image="images/fe.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/fc.jpg" alt="GLP" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">FreshPikt Peanut(410g)</div>
+                  <div class="product-price">ZMW 35</div>
+                  <button class="add-to-cart" data-id="6" data-name="FreshPikt Peanut(1kg)" data-price="35" data-image="images/fc.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/fp.jpg" alt="GLP" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Golden Foods Peanut(1kg)</div>
+                  <div class="product-price">ZMW 70</div>
+                  <button class="add-to-cart" data-id="6" data-name="Golden Foods Peanut(1kg)" data-price="70" data-image="images/cremora.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+
+          <!-- Protein -->
+          <div class="product-card">
+              <img src="images/kf.jpeg" alt="image" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Kungfu Energy Drink </div>
+                  <div class="product-price">ZMW 13</div>
+                  <button class="add-to-cart" data-id="6" data-name="kungfu energy" data-price="13" data-image="images/kf.jpeg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/mj.jpeg" alt="Beans" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Mojo Energy Drink</div>
+                  <div class="product-price">ZMW 6</div>
+                  <button class="add-to-cart" data-id="6" data-name="mojo" data-price="6" data-image="images/mj.jpeg">Add to Cart</button>
+              </div>
+          </div>
+
+          <!-- Breakfast -->
+          <div class="product-card">
+              <img src="images/cremora.jpg" alt="Cremora" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Cremora</div>
+                  <div class="product-price">ZMW 43</div>
+                  <button class="add-to-cart" data-id="7" data-name="Cremora" data-price="43" data-image="images/cremora.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/nv.jpg" alt="Bread" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">eeZee Instant Noodles (Vegtable)</div>
+                  <div class="product-price">ZMW 7</div>
+                  <button class="add-to-cart" data-id="8" data-name="noodles" data-price="7" data-image="images/nv.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <!-- Snacks -->
+          <div class="product-card">
+              <img src="images/co.jpg" alt="C" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Cocoa (125g)</div>
+                  <div class="product-price">ZMW 52</div>
+                  <button class="add-to-cart" data-id="9" data-name="Cocoa (125g)" data-price="52" data-image="images/co.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/x.jpg" alt="flakes" class="product-image">
+              <div class="product-info">
+                  <div class="product-name"> Corn Flakes (500g)</div>
+                  <div class="product-price">ZMW 55</div>
+                  <button class="add-to-cart" data-id="10" data-name="Corn Flakes" data-price="55" data-image="images/x.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <!-- Beverages -->
+          <div class="product-card">
+              <img src="images/d.jpg" alt="D" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">D'lite banana (250g)</div>
+                  <div class="product-price">ZMW 35</div>
+                  <button class="add-to-cart" data-id="11" data-name="D'lite banana" data-price="35" data-image="images/d.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/xx.jpg" alt="J" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Jungle Oats (500g)</div>
+                  <div class="product-price">ZMW 42</div>
+                  <button class="add-to-cart" data-id="12" data-name="Jungle Oats" data-price="42" data-image="images/xx.jpg">Add to Cart </button>
+              </div>
+          </div>
+
+          <!-- Vegetables -->
+          <div class="product-card">
+              <img src="images/la.jpg" alt="L" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Nestal Lactogen (400g)</div>
+                  <div class="product-price">ZMW 109</div>
+                  <button class="add-to-cart" data-id="13" data-name="Nestal Lactogen" data-price="109" data-image="images/la.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/nb.jpeg" alt="noodles" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">eeZee Instant Noodles (beef)</div>
+                  <div class="product-price">ZMW 7</div>
+                  <button class="add-to-cart" data-id="14" data-name="noodles" data-price="7" data-image="images/nb.jpeg">Add to Cart</button>
+              </div>
+          </div>
+
+          <!-- Student Essentials -->
+          <div class="product-card">
+              <img src="images/bb.jpg" alt="Rama" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Bisto Gravy (125g)</div>
+                  <div class="product-price">ZMW 18</div>
+                  <button class="add-to-cart" data-id="15" data-name="bisto (125g)" data-price="18" data-image="images/bb.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+          <div class="product-card">
+              <img src="images/sugar.jpg" alt="sugar" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">Sugar 2kg</div>
+                  <div class="product-price">ZMW 68</div>
+                  <button class="add-to-cart" data-id="15" data-name="Sugar (2kg)" data-price="68" data-image="images/sugar.jpg">Add to Cart</button>
+              </div>
+          </div>
+
+
+
+          <div class="product-card">
+              <img src="images/jum.jpg" alt="J" class="product-image">
+              <div class="product-info">
+                  <div class="product-name">FreshPikt Jam fixedfruit (300g)</div>
+                  <div class="product-price">ZMW 22</div>
+                  <button class="add-to-cart" data-id="16" data-name="FreshPikt Jam" data-price="22" data-image="images/jum.jpg">Add to Cart</button>
+              </div>
+          </div>
+      
+  
+
+  <div class="product-card">
+      <img src="images/cc.jpg" alt="C" class="product-image">
+      <div class="product-info">
+          <div class="product-name">D'lite Cooking Oil (5L)</div>
+          <div class="product-price">ZMW 253</div>
+          <button class="add-to-cart" data-id="17" data-name="D'lite Cooking Oil" data-price="253" data-image="images/cc.jpg">Add to Cart</button>
+      </div>
+  </div>
+
+
+
+
+<div class="product-card">
+  <img src="images/ch.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Testy Soya Nuggets (700g)</div>
+      <div class="product-price">ZMW 30</div>
+      <button class="add-to-cart" data-id="18" data-name="Testy Soya Nuggets" data-price="30" data-image="images/ch.jpg">Add to Cart</button>
+  </div>
+</div>
+
+
+<div class="product-card">
+  <img src="images/ri.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">D'lite Rice (5kg)</div>
+      <div class="product-price">ZMW 185</div>
+      <button class="add-to-cart" data-id="19" data-name="D'lite Rice" data-price="185" data-image="images/ri.jpg">Add to Cart</button>
+  </div>
+</div>
+
+
+<div class="product-card">
+  <img src="images/mac.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Sunblest Macaroni (3kg)</div>
+      <div class="product-price">ZMW 115</div>
+      <button class="add-to-cart" data-id="20" data-name="macaroni" data-price="115" data-image="images/mac.jpg">Add to Cart</button>
+  </div>
+</div>
+
+
+<div class="product-card">
+  <img src="images/m1.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Polana Macaroni Pasta </div>
+      <div class="product-price">ZMW 155</div>
+      <button class="add-to-cart" data-id="21" data-name="macaroni" data-price="155" data-image="images/m1.jpg">Add to Cart</button>
+  </div>
+</div>
+
+
+<div class="product-card">
+  <img src="images/p.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Suck of Potatoes </div>
+      <div class="product-price">ZMW 140</div>
+      <button class="add-to-cart" data-id="22" data-name="Potatoes" data-price="140" data-image="images/p.jpg">Add to Cart</button>
+  </div>
+</div>
+
+
+<div class="product-card">
+  <img src="images/m.jpeg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Mojo Ginger </div>
+      <div class="product-price">ZMW 6</div>
+      <button class="add-to-cart" data-id="23" data-name="mojo" data-price="6" data-image="images/m.jpeg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src= " images/ft.jpeg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">FruiTop (orange)</div>
+      <div class="product-price">ZMW 35</div>
+      <button class="add-to-cart" data-id="24" data-name="fruitop" data-price="35" data-image="images/ft.jpeg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/ft1.jpeg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">FruiTop (grape)</div>
+      <div class="product-price">ZMW 35</div>
+      <button class="add-to-cart" data-id="25" data-name="fruitop" data-price="35" data-image="images/ft1.jpeg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/ft2.jpeg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">FruiTop (granadila)</div>
+      <div class="product-price">ZMW 35</div>
+      <button class="add-to-cart" data-id="26" data-name="fruitop" data-price="35" data-image="images/ft2.jpeg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/ft2.jpeg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">FruiTop (pineapple)</div>
+      <div class="product-price">ZMW 35</div>
+      <button class="add-to-cart" data-id="27" data-name="fruitop" data-price="35" data-image="images/ft2.jpeg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/eze.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">eeZee Instant Noodles (hot&spicy)</div>
+      <div class="product-price">ZMW 7</div>
+      <button class="add-to-cart" data-id="28" data-name="noodles" data-price="7" data-image="images/eze.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/egg.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Trey of eggs</div>
+      <div class="product-price">ZMW 85</div>
+      <button class="add-to-cart" data-id="29" data-name="eggs" data-price="85" data-image="images/egg.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/a1.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Aloha Hand Washing Powder 1.8Kg</div>
+      <div class="product-price">ZMW 110</div>
+      <button class="add-to-cart" data-id="30" data-name="Aloha" data-price="110" data-image="images/a1.jpg">Add to Cart</button>
+  </div>
+</div>
+
+
+<div class="product-card">
+  <img src="images/a2.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Aloha Hand Washing Powder 4.5Kg</div>
+      <div class="product-price">ZMW 230</div>
+      <button class="add-to-cart" data-id="31" data-name="Aloha" data-price="230" data-image="images/a2.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/ban.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Banja Washing Powder 1.8kg</div>
+      <div class="product-price">ZMW 105</div>
+      <button class="add-to-cart" data-id="32" data-name=" washing power" data-price="105" data-image="images/ban.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/ban.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Banja Washing Powder 2.7kg</div>
+      <div class="product-price">ZMW 160</div>
+      <button class="add-to-cart" data-id="33" data-name="washing powder" data-price="160" data-image="images/ban.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/mayo.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Crosse & BlackWell Mayo(750g)</div>
+      <div class="product-price">ZMW 60</div>
+      <button class="add-to-cart" data-id="34" data-name="mayo" data-price="60" data-image="images/mayo.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/dr2.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Dr Nutz Smooth peanutbutter 2.5kg</div>
+      <div class="product-price">ZMW 170</div>
+      <button class="add-to-cart" data-id="35" data-name="peanutbutter" data-price="170" data-image="images/dr.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/dr1.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Dr Nutz Smooth peanutbutter 1kg</div>
+      <div class="product-price">ZMW 80</div>
+      <button class="add-to-cart" data-id="36" data-name="peanutbutter" data-price="80" data-image="images/dr1.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/pr.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Protex Soap 150g</div>
+      <div class="product-price">ZMW  20</div>
+      <button class="add-to-cart" data-id="37" data-name="soap" data-price="20" data-image="images/pr.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/det.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Dettol Soap  175g</div>
+      <div class="product-price">ZMW 22</div>
+      <button class="add-to-cart" data-id="38" data-name="soap" data-price="22" data-image="images/det.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/cus.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Custard Powder 250g</div>
+      <div class="product-price">ZMW  40</div>
+      <button class="add-to-cart" data-id="39" data-name="Custard" data-price="40" data-image="images/cus.jpg">Add to Cart</button>
+  </div>
+</div>
+
+
+<div class="product-card">
+  <img src="images/bi.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Binto Instant Noodles</div>
+      <div class="product-price">ZMW 7</div>
+      <button class="add-to-cart" data-id="40" data-name="noodles" data-price="7" data-image="images/bi.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/zed.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Zed Instant noodles</div>
+      <div class="product-price">ZMW 7</div>
+      <button class="add-to-cart" data-id="41" data-name="noodles" data-price="7" data-image="images/zed.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/zam.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Zam Instant Noodles</div>
+      <div class="product-price">ZMW  7</div>
+      <button class="add-to-cart" data-id="42" data-name="noodles" data-price="7" data-image="images/zam.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/q2.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Quick Drew Tea Bags(100)</div>
+      <div class="product-price">ZMW 55</div>
+      <button class="add-to-cart" data-id="43" data-name="tea" data-price="55" data-image="images/q2.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/q1.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Quick Drew Tea Bags(50)</div>
+      <div class="product-price">ZMW 28</div>
+      <button class="add-to-cart" data-id="44" data-name="tea" data-price="28" data-image="images/q1.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/aroz.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Arroz Branco White rice (5kg)</div>
+      <div class="product-price">ZMW 165</div>
+      <button class="add-to-cart" data-id="45" data-name="rice" data-price="165" data-image="images/aroz.jpg">Add to Cart</button>
+  </div>
+</div>
+<div class="product-card">
+  <img src="images/aroz.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Arroz Branco White rice (2kg)</div>
+      <div class="product-price">ZMW 70</div>
+      <button class="add-to-cart" data-id="46" data-name="rice" data-price="70" data-image="images/aroz.jpg">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product-card">
+  <img src="images/r9.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Nakonde  rice (5kg)</div>
+      <div class="product-price"> ZMW  160 </div>
+      <button class="add-to-cart" data-id="47" data-name="rice" data-price="160" data-image="images/r9.jpg">Add to Cart</button>
+  </div>
+</div>
+<div class="product-card">
+  <img src="images/b9.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Bela Macaroni pasta</div>
+      <div class="product-price">ZMW 118 </div>
+      <button class="add-to-cart" data-id="48" data-name="pasta" data-price="118" data-image="images/b9.jpg">Add to Cart</button>
+  </div>
+</div>
+<div class="product-card">
+  <img src="images/s9.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Binto T-bone spice</div>
+      <div class="product-price">ZMW 12</div>
+      <button class="add-to-cart" data-id="49" data-name="spice" data-price="12" data-image="images/s9.jpg">Add to Cart</button>
+  </div>
+</div>
+<div class="product-card">
+  <img src="images/s6.jpg" alt="C" class="product-image">
+  <div class="product-info">
+      <div class="product-name">Binto Chicken spice</div>
+      <div class="product-price">ZMW 12</div>
+      <button class="add-to-cart" data-id="50" data-name="spice" data-price="12" data-image="images/s6.jpg">Add to Cart</button>
+  </div>
+</div>
+
+
+            
+    <!-- Suggestion Box Overlay -->
+    <div class="suggestion-overlay" id="suggestionOverlay">
+        <div class="suggestion-box">
+            <div class="suggestion-header">
+                <div class="suggestion-title">Suggest a Product</div>
+                <button class="close-suggestion">×</button>
+            </div>
+            <p style="color: var(--text-light); margin-bottom: 15px;">Suggest groceries/products you would like us to add to the website.</p>
+            <textarea class="suggestion-input" placeholder="Type your product suggestion here..." id="suggestionText"></textarea>
+            <button class="send-suggestion" id="sendSuggestion">Send Suggestion</button>
+        </div>
+    </div>
+
+    <!-- Campus Selection Modal -->
+    <div class="campus-overlay" id="campusOverlay">
+        <div class="campus-box">
+            <div class="campus-header">
+                <div class="campus-title">Select Your Campus</div>
+                <button class="close-campus">×</button>
+            </div>
+            <div class="campus-options">
+                <button class="campus-option" data-campus="main">Main Campus</button>
+                <button class="campus-option" data-campus="ridgeway">Ridgeway Campus</button>
+                <button class="campus-option" data-campus="other">Other Universities </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar - Slides in from right when cart icon is clicked -->
+    <div class="cart-overlay"></div>
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart">×</button>
+        </div>
+        <div class="cart-items">
+            <p class="empty-cart-message">Your cart is empty</p>
+        </div>
+        <div class="cart-total">
+            <div class="total-amount">
+                <span>Total:</span>
+                <span class="total-price">ZMW 0</span>
+            </div>
+            <button class="checkout-btn">Place Order via WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+
+        // Set initial theme
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeButton(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeButton(newTheme);
+        });
+
+        function updateThemeButton(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+
+        // DOM Elements
+        const cartIcon = document.querySelector('.cart-icon');
+        const cartCount = document.querySelector('.cart-count');
+        const cartOverlay = document.querySelector('.cart-overlay');
+        const cartSidebar = document.querySelector('.cart-sidebar');
+        const closeCart = document.querySelector('.close-cart');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const cartItemsContainer = document.querySelector('.cart-items');
+        const emptyCartMessage = document.querySelector('.empty-cart-message');
+        const totalPriceElement = document.querySelector('.total-price');
+        const checkoutBtn = document.querySelector('.checkout-btn');
+        const searchInput = document.getElementById('searchInput');
+        const productCards = document.querySelectorAll('.product-card');
+
+        // Suggestion Box Elements
+        const suggestionBtn = document.querySelector('.suggestion-btn');
+        const suggestionOverlay = document.getElementById('suggestionOverlay');
+        const closeSuggestion = document.querySelector('.close-suggestion');
+        const sendSuggestionBtn = document.getElementById('sendSuggestion');
+        const suggestionText = document.getElementById('suggestionText');
+
+        // Campus Selection Elements
+        const campusOverlay = document.getElementById('campusOverlay');
+        const closeCampus = document.querySelector('.close-campus');
+        const campusOptions = document.querySelectorAll('.campus-option');
+
+        // WhatsApp numbers for each campus
+        const campusNumbers = {
+            main: "260750478946",
+            ridgeway: "260769209950",
+            other: "260766612581"
+        };
+
+        // Cart data
+        let cart = [];
+
+        // Suggestion Box functionality
+        suggestionBtn.addEventListener('click', () => {
+            suggestionOverlay.style.display = 'flex';
+        });
+
+        closeSuggestion.addEventListener('click', () => {
+            suggestionOverlay.style.display = 'none';
+            suggestionText.value = '';
+        });
+
+        sendSuggestionBtn.addEventListener('click', () => {
+            const suggestion = suggestionText.value.trim();
+            if (suggestion) {
+                // Use main campus number for suggestions
+                const whatsappNumber = campusNumbers.main;
+                
+                // Create suggestion message
+                const message = `New Product Suggestion:\n\n${suggestion}`;
+                
+                // Encode message for WhatsApp URL
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Open WhatsApp with the suggestion message
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+                
+                // Close the suggestion box and clear the input
+                suggestionOverlay.style.display = 'none';
+                suggestionText.value = '';
+                
+                // Optional: Show confirmation
+                alert('Thank you for your suggestion! We will review it soon.');
+            } else {
+                alert('Please enter a product suggestion before sending.');
+            }
+        });
+
+        // Close suggestion box when clicking outside
+        suggestionOverlay.addEventListener('click', (e) => {
+            if (e.target === suggestionOverlay) {
+                suggestionOverlay.style.display = 'none';
+                suggestionText.value = '';
+            }
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            productCards.forEach(card => {
+                const name = card.querySelector('.product-name').textContent.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Toggle cart visibility
+        cartIcon.addEventListener('click', () => {
+            cartOverlay.style.display = 'block';
+            cartSidebar.classList.add('active');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            cartOverlay.style.display = 'none';
+        });
+
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            cartOverlay.style.display = 'none';
+        });
+
+        // Add to cart functionality
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                const image = button.getAttribute('data-image');
+
+                // Check if item already exists in cart
+                const existingItem = cart.find(item => item.id === id);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        image,
+                        quantity: 1
+                    });
+                }
+
+                updateCart();
+            });
+        });
+
+        // Update cart UI
+        function updateCart() {
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            // Update cart items
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
+            } else {
+                emptyCartMessage.style.display = 'none';
+                
+                let cartHTML = '';
+                let totalPrice = 0;
+
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    totalPrice += itemTotal;
+
+                    cartHTML += `
+                        <div class="cart-item" data-id="${item.id}">
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                            <div class="cart-item-details">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-price">ZMW ${item.price}</div>
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus">-</button>
+                                    <span class="quantity">${item.quantity}</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                cartItemsContainer.innerHTML = cartHTML;
+                totalPriceElement.textContent = `ZMW ${totalPrice.toFixed(2)}`;
+
+                // Add event listeners to quantity buttons
+                document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const itemId = e.target.closest('.cart-item').getAttribute('data-id');
+                        updateQuantity(itemId, -1);
+                    });
+                });
+
+                document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const itemId = e.target.closest('.cart-item').getAttribute('data-id');
+                        updateQuantity(itemId, 1);
+                    });
+                });
+            }
+        }
+
+        // Update item quantity
+        function updateQuantity(itemId, change) {
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity += change;
+                
+                // Remove item if quantity reaches 0
+                if (cart[itemIndex].quantity <= 0) {
+                    cart.splice(itemIndex, 1);
+                }
+                
+                updateCart();
+            }
+        }
+
+        // WhatsApp checkout functionality
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            // Show campus selection modal instead of directly opening WhatsApp
+            campusOverlay.style.display = 'flex';
+        });
+
+        // Campus selection functionality
+        campusOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const campus = option.getAttribute('data-campus');
+                sendWhatsAppOrder(campus);
+                campusOverlay.style.display = 'none';
+            });
+        });
+
+        closeCampus.addEventListener('click', () => {
+            campusOverlay.style.display = 'none';
+        });
+
+        campusOverlay.addEventListener('click', (e) => {
+            if (e.target === campusOverlay) {
+                campusOverlay.style.display = 'none';
+            }
+        });
+
+        function sendWhatsAppOrder(campus) {
+            // Create order message
+            let message = `Hello! I'd like to order from ${campus === 'main' ? 'Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : 'Other Universities'}:\n\n`;
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `${item.name} x ${item.quantity} = ZMW ${itemTotal.toFixed(2)}\n`;
+            });
+
+            message += `\nTotal: ZMW ${total.toFixed(2)}`;
+            message += "\n\nPlease confirm my order. Thank you!";
+
+            // Encode message for WhatsApp URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Get the appropriate WhatsApp number based on campus selection
+            const whatsappNumber = campusNumbers[campus];
+            
+            // Open WhatsApp with the order message
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => {
+        console.log('✅ Service Worker Registered');
+
+        // Check for new updates
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+
+          newWorker.addEventListener('statechange', () => {
+            // Only notify if there's already an active service worker
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              if (confirm("🆕 A new version is available. Update now?")) {
+                window.location.reload();
+              }
+            }
+          });
+        });
+
+      });
+
+  });
+}
+</script>
+</body>
+</html>
