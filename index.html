@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- PWA Manifest Connection -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#64ffda" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
-
   <title>CampusCart</title>
 
   <style>
@@ -136,10 +133,57 @@
       margin: 0 auto;
     }
 
-    h1 {
+    /* Category Tabs - HORIZONTAL */
+    .category-tabs {
+      display: flex;
+      background-color: var(--navy);
+      border-radius: 8px;
+      overflow: hidden;
       margin-bottom: 20px;
-      color: var(--light-blue);
+      border: 1px solid var(--light-blue);
+    }
+
+    .category-tab {
+      flex: 1;
+      padding: 12px 0;
       text-align: center;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-tab:hover {
+      background-color: rgba(100, 255, 218, 0.1);
+    }
+
+    .category-tab.active {
+      background-color: var(--light-blue);
+      color: var(--dark-blue);
+    }
+
+    /* Suggestion Button */
+    .suggestion-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .suggestion-btn {
+      background-color: var(--light-blue);
+      color: var(--dark-blue);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .suggestion-btn:hover {
+      opacity: 0.9;
     }
 
     .products {
@@ -201,7 +245,7 @@
       color: var(--dark-blue);
     }
 
-    /* Cart Sidebar - Fixed to right side */
+    /* Cart Sidebar */
     .cart-overlay {
       position: fixed;
       top: 0;
@@ -350,28 +394,7 @@
       margin-top: 50px;
     }
 
-    /* Suggestion Box Styles */
-    .suggestion-section {
-      display: flex;
-      justify-content: flex-start;
-      margin-bottom: 20px;
-    }
-
-    .suggestion-btn {
-      background-color: var(--light-blue);
-      color: var(--dark-blue);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    .suggestion-btn:hover {
-      opacity: 0.9;
-    }
-
+    /* Suggestion Box */
     .suggestion-overlay {
       position: fixed;
       top: 0;
@@ -449,7 +472,7 @@
       opacity: 0.9;
     }
 
-    /* Campus Selection Modal */
+    /* Campus Selection */
     .campus-overlay {
       position: fixed;
       top: 0;
@@ -520,7 +543,7 @@
       color: var(--dark-blue);
     }
 
-    /* Light Theme Styles */
+    /* Light Theme */
     [data-theme="light"] {
       --dark-blue: #f0f0f0;
       --navy: #ffffff;
@@ -570,7 +593,21 @@
       background-color: var(--navy);
     }
 
-    /* Responsive adjustments */
+    [data-theme="light"] .category-tabs {
+      background-color: var(--navy);
+      border: 1px solid var(--light-blue);
+    }
+
+    [data-theme="light"] .category-tab {
+      color: var(--text-light);
+    }
+
+    [data-theme="light"] .category-tab.active {
+      background-color: var(--light-blue);
+      color: var(--dark-blue);
+    }
+
+    /* Responsive */
     @media (min-width: 768px) {
       .header-content {
         flex-direction: row;
@@ -607,9 +644,17 @@
       .product-image {
         height: 120px;
       }
+      
+      .category-tabs {
+        flex-direction: row;
+      }
+      
+      .category-tab {
+        padding: 10px 5px;
+        font-size: 14px;
+      }
     }
 
-    /* Delivery fee notice */
     .delivery-fee {
       background-color: var(--dark-blue);
       color: var(--light-blue);
@@ -620,7 +665,6 @@
       border-bottom: 1px solid var(--light-blue);
     }
 
-    /* Payment methods */
     .payment-methods {
       text-align: center;
       margin-top: 10px;
@@ -641,7 +685,7 @@
 </head>
 
 <body>
-  <!-- Header with logo, search, and cart -->
+  <!-- Header -->
   <header class="main-header">
     <div class="header-content">
       <div class="logo-row">
@@ -662,16 +706,24 @@
 
   <!-- Main content -->
   <div class="container">
-    <h1>Available products</h1>
-
     <!-- Suggestion Button -->
-    <div class="suggestion-section">
+    <div class="suggestion-container">
       <button class="suggestion-btn">SUGGEST A PRODUCT</button>
     </div>
 
+    <!-- Category Tabs - HORIZONTAL -->
+    <div class="category-tabs">
+      <button class="category-tab active" data-category="groceries">Groceries</button>
+      <button class="category-tab" data-category="beverages">Beverages</button>
+      <button class="category-tab" data-category="cosmetics">Cosmetics</button>
+    </div>
+
+    <!-- ALL PRODUCTS -->
     <div class="products">
-      <!-- Your full product list as sent (kept intact) -->
-      <div class="product-card">
+      
+      <!-- ===== GROCERIES ===== -->
+      <!-- Rice & Grains -->
+      <div class="product-card" data-category="groceries">
         <img src="images/rice.jpg" alt="Rice" class="product-image" />
         <div class="product-info">
           <div class="product-name">Nakonde Rice (5kg)</div>
@@ -680,205 +732,7 @@
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/nn.jpg" alt="Mealie Meal" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">eeZee Instant noodles (chicken)</div>
-          <div class="product-price">ZMW 7</div>
-          <button class="add-to-cart" data-id="2" data-name="eeZee Instant noodles (chicken)" data-price="7" data-image="images/nn.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/s.jpg" alt="Cooking Oil" class="product-image" />
-        <div class="product-info">
-          <div class="product-name"> StarGold Cooking Oil (5L)</div>
-          <div class="product-price">ZMW 261</div>
-          <button class="add-to-cart" data-id="3" data-name="StarGold Cooking Oil (5L)" data-price="261" data-image="images/s.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/r.jpg" alt="Ricoffy" class="product-image" />
-        <div class="product-info">
-          <div class="product-name"> Ricoffy (250g)</div>
-          <div class="product-price">ZMW 77</div>
-          <button class="add-to-cart" data-id="3" data-name="Ricoffy (250g)" data-price="77" data-image="images/r.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/g.jpg" alt="GLP" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Golden Leaves Peanut(1kg)</div>
-          <div class="product-price">ZMW 84</div>
-          <button class="add-to-cart" data-id="4" data-name="Golden Leaves Peanut(1kg)" data-price="84" data-image="images/g.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/fe.jpg" alt="GLP" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">FreshPikt Peanut(1kg)</div>
-          <div class="product-price">ZMW 78</div>
-          <button class="add-to-cart" data-id="5" data-name="FreshPikt Peanut(1kg)" data-price="78" data-image="images/fe.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/fc.jpg" alt="GLP" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">FreshPikt Peanut(410g)</div>
-          <div class="product-price">ZMW 35</div>
-          <button class="add-to-cart" data-id="6" data-name="FreshPikt Peanut(410kg)" data-price="35" data-image="images/fc.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/fp.jpg" alt="GLP" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Golden Foods Peanut(1kg)</div>
-          <div class="product-price">ZMW 70</div>
-          <button class="add-to-cart" data-id="6" data-name="Golden Foods Peanut(1kg)" data-price="70" data-image="images/cremora.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/kf.jpeg" alt="image" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Kungfu Energy Drink </div>
-          <div class="product-price">ZMW 15</div>
-          <button class="add-to-cart" data-id="6" data-name="kungfu energy" data-price="15" data-image="images/kf.jpeg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/mj.jpeg" alt="Beans" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Mojo Energy Drink</div>
-          <div class="product-price">ZMW 6</div>
-          <button class="add-to-cart" data-id="6" data-name="Mojo Energy Drink" data-price="6" data-image="images/mj.jpeg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/cremora.jpg" alt="Cremora" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Cremora</div>
-          <div class="product-price">ZMW 43</div>
-          <button class="add-to-cart" data-id="7" data-name="Cremora" data-price="43" data-image="images/cremora.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/nv.jpg" alt="Bread" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">eeZee Instant Noodles (Vegtable)</div>
-          <div class="product-price">ZMW 7</div>
-          <button class="add-to-cart" data-id="8" data-name="eeZee Instant Noodles (Vegtable)" data-price="7" data-image="images/nv.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/co.jpg" alt="C" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Cocoa (125g)</div>
-          <div class="product-price">ZMW 52</div>
-          <button class="add-to-cart" data-id="9" data-name="Cocoa (125g)" data-price="52" data-image="images/co.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/x.jpg" alt="flakes" class="product-image" />
-        <div class="product-info">
-          <div class="product-name"> Corn Flakes (500g)</div>
-          <div class="product-price">ZMW 55</div>
-          <button class="add-to-cart" data-id="10" data-name="Corn Flakes (500g)" data-price="55" data-image="images/x.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/d.jpg" alt="D" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">D'lite banana (250g)</div>
-          <div class="product-price">ZMW 38</div>
-          <button class="add-to-cart" data-id="11" data-name="D'lite banana (250g)" data-price="35" data-image="images/d.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/xx.jpg" alt="J" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Jungle Oats (500g)</div>
-          <div class="product-price">ZMW 42</div>
-          <button class="add-to-cart" data-id="12" data-name="Jungle Oats (500g)" data-price="42" data-image="images/xx.jpg">Add to Cart </button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/la.jpg" alt="L" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Nestal Lactogen (400g)</div>
-          <div class="product-price">ZMW 109</div>
-          <button class="add-to-cart" data-id="13" data-name="Nestal Lactogen (400g)" data-price="109" data-image="images/la.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/nb.jpeg" alt="noodles" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">eeZee Instant Noodles (beef)</div>
-          <div class="product-price">ZMW 7</div>
-          <button class="add-to-cart" data-id="14" data-name="eeZee Instant Noodles (beef)" data-price="7" data-image="images/nb.jpeg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/bb.jpg" alt="Rama" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Bisto Gravy (125g)</div>
-          <div class="product-price">ZMW 18</div>
-          <button class="add-to-cart" data-id="15" data-name="bisto Gravy (125g)" data-price="18" data-image="images/bb.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/sugar.jpg" alt="sugar" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Sugar 2kg</div>
-          <div class="product-price">ZMW 68</div>
-          <button class="add-to-cart" data-id="15" data-name="Sugar (2kg)" data-price="68" data-image="images/sugar.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/jum.jpg" alt="J" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">FreshPikt Jam fixedfruit (300g)</div>
-          <div class="product-price">ZMW 22</div>
-          <button class="add-to-cart" data-id="16" data-name="FreshPikt Jam (300g)" data-price="22" data-image="images/jum.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/cc.jpg" alt="C" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">D'lite Cooking Oil (5L)</div>
-          <div class="product-price">ZMW 253</div>
-          <button class="add-to-cart" data-id="17" data-name="D'lite Cooking Oil (5L)" data-price="253" data-image="images/cc.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/ch.jpg" alt="C" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Testy Soya Nuggets (700g)</div>
-          <div class="product-price">ZMW 30</div>
-          <button class="add-to-cart" data-id="18" data-name="Testy Soya Nuggets (700g)" data-price="30" data-image="images/ch.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
+      <div class="product-card" data-category="groceries">
         <img src="images/ri.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">D'lite Rice (5kg)</div>
@@ -887,79 +741,62 @@
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/mac.jpg" alt="C" class="product-image" />
+      <div class="product-card" data-category="groceries">
+        <img src="images/aroz.jpg" alt="C" class="product-image">
         <div class="product-info">
-          <div class="product-name">Sunblest Macaroni (3kg)</div>
-          <div class="product-price">ZMW 115</div>
-          <button class="add-to-cart" data-id="20" data-name="Sunblest Macaroni (3kg)" data-price="115" data-image="images/mac.jpg">Add to Cart</button>
+          <div class="product-name">Arroz Branco White rice (5kg)</div>
+          <div class="product-price">ZMW 165</div>
+          <button class="add-to-cart" data-id="45" data-name="Arroz Branco White rice (5kg)" data-price="165" data-image="images/aroz.jpg">Add to Cart</button>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="groceries">
+        <img src="images/aroz.jpg" alt="C" class="product-image">
+        <div class="product-info">
+          <div class="product-name">Arroz Branco White rice (2kg)</div>
+          <div class="product-price">ZMW 70</div>
+          <button class="add-to-cart" data-id="46" data-name="Arroz Branco White rice (2kg)" data-price="70" data-image="images/aroz.jpg">Add to Cart</button>
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/m1.jpg" alt="C" class="product-image" />
+      <div class="product-card" data-category="groceries">
+        <img src="images/r9.jpg" alt="C" class="product-image">
         <div class="product-info">
-          <div class="product-name">Polana Macaroni Pasta </div>
-          <div class="product-price">ZMW 155</div>
-          <button class="add-to-cart" data-id="21" data-name="Polana Macaroni Pasta" data-price="155" data-image="images/m1.jpg">Add to Cart</button>
+          <div class="product-name">Nakonde rice (5kg)</div>
+          <div class="product-price"> ZMW 160 </div>
+          <button class="add-to-cart" data-id="47" data-name="Nakonde rice (5kg)" data-price="160" data-image="images/r9.jpg">Add to Cart</button>
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/p.jpg" alt="C" class="product-image" />
+      <!-- Noodles -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/nn.jpg" alt="Mealie Meal" class="product-image" />
         <div class="product-info">
-          <div class="product-name">Suck of Potatoes </div>
-          <div class="product-price">ZMW 140</div>
-          <button class="add-to-cart" data-id="22" data-name="Suck of Potatoes" data-price="140" data-image="images/p.jpg">Add to Cart</button>
+          <div class="product-name">eeZee Instant noodles (chicken)</div>
+          <div class="product-price">ZMW 7</div>
+          <button class="add-to-cart" data-id="2" data-name="eeZee Instant noodles (chicken)" data-price="7" data-image="images/nn.jpg">Add to Cart</button>
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/m.jpeg" alt="C" class="product-image" />
+      <div class="product-card" data-category="groceries">
+        <img src="images/nv.jpg" alt="Bread" class="product-image" />
         <div class="product-info">
-          <div class="product-name">Mojo Ginger </div>
-          <div class="product-price">ZMW 6</div>
-          <button class="add-to-cart" data-id="23" data-name="Mojo Ginger" data-price="6" data-image="images/m.jpeg">Add to Cart</button>
+          <div class="product-name">eeZee Instant Noodles (Vegtable)</div>
+          <div class="product-price">ZMW 7</div>
+          <button class="add-to-cart" data-id="8" data-name="eeZee Instant Noodles (Vegtable)" data-price="7" data-image="images/nv.jpg">Add to Cart</button>
         </div>
       </div>
 
-      <div class="product-card">
-        <img src=" images/ft.jpeg" alt="C" class="product-image" />
+      <div class="product-card" data-category="groceries">
+        <img src="images/nb.jpeg" alt="noodles" class="product-image" />
         <div class="product-info">
-          <div class="product-name">FruiTop (orange)</div>
-          <div class="product-price">ZMW 37</div>
-          <button class="add-to-cart" data-id="24" data-name="fruitop (orange)" data-price="37" data-image="images/ft.jpeg">Add to Cart</button>
+          <div class="product-name">eeZee Instant Noodles (beef)</div>
+          <div class="product-price">ZMW 7</div>
+          <button class="add-to-cart" data-id="14" data-name="eeZee Instant noodles (beef)" data-price="7" data-image="images/nb.jpeg">Add to Cart</button>
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/ft1.jpeg" alt="C" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">FruiTop (grape)</div>
-          <div class="product-price">ZMW 37</div>
-          <button class="add-to-cart" data-id="25" data-name="fruitop (grape)" data-price="37" data-image="images/ft1.jpeg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/ft2.jpeg" alt="C" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">FruiTop (granadila)</div>
-          <div class="product-price">ZMW 37</div>
-          <button class="add-to-cart" data-id="26" data-name="fruitop (granadila) " data-price="37" data-image="images/ft2.jpeg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/ft2.jpeg" alt="C" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">FruiTop (pineapple)</div>
-          <div class="product-price">ZMW 37</div>
-          <button class="add-to-cart" data-id="27" data-name="fruitop (pineapple)" data-price="37" data-image="images/ft2.jpeg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
+      <div class="product-card" data-category="groceries">
         <img src="images/eze.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">eeZee Instant Noodles (hot&spicy)</div>
@@ -968,16 +805,272 @@
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/egg.jpg" alt="C" class="product-image" />
+      <div class="product-card" data-category="groceries">
+        <img src="images/bi.jpg" alt="C" class="product-image" />
         <div class="product-info">
-          <div class="product-name">Trey of eggs</div>
-          <div class="product-price">ZMW 86</div>
-          <button class="add-to-cart" data-id="29" data-name="Trey of eggs" data-price="86" data-image="images/egg.jpg">Add to Cart</button>
+          <div class="product-name">Binto Instant Noodles</div>
+          <div class="product-price">ZMW 7</div>
+          <button class="add-to-cart" data-id="40" data-name="Binto Instant Noodles" data-price="7" data-image="images/bi.jpg">Add to Cart</button>
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="groceries">
+        <img src="images/zam.jpg" alt="C" class="product-image">
+        <div class="product-info">
+          <div class="product-name">Zam Instant Noodles</div>
+          <div class="product-price">ZMW 7</div>
+          <button class="add-to-cart" data-id="42" data-name="Zam Instant Noodles" data-price="7" data-image="images/zam.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Cooking Oil -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/s.jpg" alt="Cooking Oil" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">StarGold Cooking Oil (5L)</div>
+          <div class="product-price">ZMW 261</div>
+          <button class="add-to-cart" data-id="3" data-name="StarGold Cooking Oil (5L)" data-price="261" data-image="images/s.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/cc.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">D'lite Cooking Oil (5L)</div>
+          <div class="product-price">ZMW 253</div>
+          <button class="add-to-cart" data-id="17" data-name="D'lite Cooking Oil (5L)" data-price="253" data-image="images/cc.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Coffee & Tea -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/r.jpg" alt="Ricoffy" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Ricoffy (250g)</div>
+          <div class="product-price">ZMW 77</div>
+          <button class="add-to-cart" data-id="3" data-name="Ricoffy (250g)" data-price="77" data-image="images/r.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/q2.jpg" alt="C" class="product-image">
+        <div class="product-info">
+          <div class="product-name">Quick Drew Tea Bags(100)</div>
+          <div class="product-price">ZMW 55</div>
+          <button class="add-to-cart" data-id="43" data-name="Quick Drew Tea Bags(100)" data-price="55" data-image="images/q2.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/q1.jpg" alt="C" class="product-image">
+        <div class="product-info">
+          <div class="product-name">Quick Drew Tea Bags(50)</div>
+          <div class="product-price">ZMW 28</div>
+          <button class="add-to-cart" data-id="44" data-name="Quick Drew Tea Bags(50)" data-price="28" data-image="images/q1.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/co.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Cocoa (125g)</div>
+          <div class="product-price">ZMW 52</div>
+          <button class="add-to-cart" data-id="9" data-name="Cocoa (125g)" data-price="52" data-image="images/co.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Peanuts -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/g.jpg" alt="GLP" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Golden Leaves Peanut(1kg)</div>
+          <div class="product-price">ZMW 84</div>
+          <button class="add-to-cart" data-id="4" data-name="Golden Leaves Peanut(1kg)" data-price="84" data-image="images/g.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/fe.jpg" alt="GLP" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">FreshPikt Peanut(1kg)</div>
+          <div class="product-price">ZMW 78</div>
+          <button class="add-to-cart" data-id="5" data-name="FreshPikt Peanut(1kg)" data-price="78" data-image="images/fe.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/fc.jpg" alt="GLP" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">FreshPikt Peanut(410g)</div>
+          <div class="product-price">ZMW 35</div>
+          <button class="add-to-cart" data-id="6" data-name="FreshPikt Peanut(410g)" data-price="35" data-image="images/fc.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/fp.jpg" alt="GLP" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Golden Foods Peanut(1kg)</div>
+          <div class="product-price">ZMW 70</div>
+          <button class="add-to-cart" data-id="6" data-name="Golden Foods Peanut(1kg)" data-price="70" data-image="images/cremora.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Creamer & Milk -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/cremora.jpg" alt="Cremora" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Cremora</div>
+          <div class="product-price">ZMW 43</div>
+          <button class="add-to-cart" data-id="7" data-name="Cremora" data-price="43" data-image="images/cremora.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/la.jpg" alt="L" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Nestal Lactogen (400g)</div>
+          <div class="product-price">ZMW 109</div>
+          <button class="add-to-cart" data-id="13" data-name="Nestal Lactogen (400g)" data-price="109" data-image="images/la.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Cereals -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/x.jpg" alt="flakes" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Corn Flakes (500g)</div>
+          <div class="product-price">ZMW 55</div>
+          <button class="add-to-cart" data-id="10" data-name="Corn Flakes (500g)" data-price="55" data-image="images/x.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/d.jpg" alt="D" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">D'lite banana (250g)</div>
+          <div class="product-price">ZMW 38</div>
+          <button class="add-to-cart" data-id="11" data-name="D'lite banana (250g)" data-price="35" data-image="images/d.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/xx.jpg" alt="J" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Jungle Oats (500g)</div>
+          <div class="product-price">ZMW 42</div>
+          <button class="add-to-cart" data-id="12" data-name="Jungle Oats (500g)" data-price="42" data-image="images/xx.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Spices & Gravy -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/bb.jpg" alt="Rama" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Bisto Gravy (125g)</div>
+          <div class="product-price">ZMW 18</div>
+          <button class="add-to-cart" data-id="15" data-name="bisto Gravy (125g)" data-price="18" data-image="images/bb.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/s9.jpg" alt="C" class="product-image">
+        <div class="product-info">
+          <div class="product-name">Binto T-bone spice</div>
+          <div class="product-price">ZMW 12</div>
+          <button class="add-to-cart" data-id="49" data-name="Binto T-bone spice" data-price="12" data-image="images/s9.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/s6.jpg" alt="C" class="product-image">
+        <div class="product-info">
+          <div class="product-name">Binto Chicken spice</div>
+          <div class="product-price">ZMW 12</div>
+          <button class="add-to-cart" data-id="50" data-name="Binto Chicken spice" data-price="12" data-image="images/s6.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Sugar -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/sugar.jpg" alt="sugar" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Sugar 2kg</div>
+          <div class="product-price">ZMW 68</div>
+          <button class="add-to-cart" data-id="15" data-name="Sugar (2kg)" data-price="68" data-image="images/sugar.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Jam -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/jum.jpg" alt="J" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">FreshPikt Jam fixedfruit (300g)</div>
+          <div class="product-price">ZMW 22</div>
+          <button class="add-to-cart" data-id="16" data-name="FreshPikt Jam (300g)" data-price="22" data-image="images/jum.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Soya & Protein -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/ch.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Testy Soya Nuggets (700g)</div>
+          <div class="product-price">ZMW 30</div>
+          <button class="add-to-cart" data-id="18" data-name="Testy Soya Nuggets (700g)" data-price="30" data-image="images/ch.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pasta & Macaroni -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/mac.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Sunblest Macaroni (3kg)</div>
+          <div class="product-price">ZMW 115</div>
+          <button class="add-to-cart" data-id="20" data-name="Sunblest Macaroni (3kg)" data-price="115" data-image="images/mac.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/m1.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Polana Macaroni Pasta</div>
+          <div class="product-price">ZMW 155</div>
+          <button class="add-to-cart" data-id="21" data-name="Polana Macaroni Pasta" data-price="155" data-image="images/m1.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="groceries">
+        <img src="images/b9.jpg" alt="C" class="product-image">
+        <div class="product-info">
+          <div class="product-name">Bela Macaroni pasta</div>
+          <div class="product-price">ZMW 118</div>
+          <button class="add-to-cart" data-id="48" data-name="Bela Macaroni pasta" data-price="118" data-image="images/b9.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Potatoes -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/p.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Sack of Potatoes</div>
+          <div class="product-price">ZMW 140</div>
+          <button class="add-to-cart" data-id="22" data-name="Sack of Potatoes" data-price="140" data-image="images/p.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Eggs -->
+      <div class="product-card" data-category="groceries">
+        <img src="images/egg.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Tray of eggs</div>
+          <div class="product-price">ZMW 86</div>
+          <button class="add-to-cart" data-id="29" data-name="Tray of eggs" data-price="86" data-image="images/egg.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Washing Powder -->
+      <div class="product-card" data-category="groceries">
         <img src="images/a1.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">Aloha Hand Washing Powder 1.8Kg</div>
@@ -986,7 +1079,7 @@
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="groceries">
         <img src="images/a2.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">Aloha Hand Washing Powder 4.5Kg</div>
@@ -995,16 +1088,16 @@
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="groceries">
         <img src="images/ban.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">Banja Washing Powder 1.8kg</div>
           <div class="product-price">ZMW 105</div>
-          <button class="add-to-cart" data-id="32" data-name=" Banja Washing Powder 1.8kg" data-price="105" data-image="images/ban.jpg">Add to Cart</button>
+          <button class="add-to-cart" data-id="32" data-name="Banja Washing Powder 1.8kg" data-price="105" data-image="images/ban.jpg">Add to Cart</button>
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="groceries">
         <img src="images/ban.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">Banja Washing Powder 2.7kg</div>
@@ -1013,7 +1106,8 @@
         </div>
       </div>
 
-      <div class="product-card">
+      <!-- Mayo & Peanut Butter -->
+      <div class="product-card" data-category="groceries">
         <img src="images/mayo.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">Crosse & BlackWell Mayo(750g)</div>
@@ -1022,7 +1116,7 @@
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="groceries">
         <img src="images/dr2.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">Dr Nutz Smooth peanutbutter 2.5kg</div>
@@ -1031,7 +1125,7 @@
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="groceries">
         <img src="images/dr1.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">Dr Nutz Smooth peanutbutter 1kg</div>
@@ -1040,144 +1134,118 @@
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/pr.jpg" alt="C" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Protex Soap 150g</div>
-          <div class="product-price">ZMW  20</div>
-          <button class="add-to-cart" data-id="37" data-name="Protex Soap 150g" data-price="20" data-image="images/pr.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <img src="images/det.jpg" alt="C" class="product-image" />
-        <div class="product-info">
-          <div class="product-name">Dettol Soap  175g</div>
-          <div class="product-price">ZMW 22</div>
-          <button class="add-to-cart" data-id="38" data-name="Dettol Soap  175g" data-price="22" data-image="images/det.jpg">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card">
+      <!-- Custard -->
+      <div class="product-card" data-category="groceries">
         <img src="images/cus.jpg" alt="C" class="product-image" />
         <div class="product-info">
           <div class="product-name">Custard Powder 250g</div>
-          <div class="product-price">ZMW  40</div>
+          <div class="product-price">ZMW 40</div>
           <button class="add-to-cart" data-id="39" data-name="Custard Powder 250g" data-price="40" data-image="images/cus.jpg">Add to Cart</button>
         </div>
       </div>
 
-      <div class="product-card">
-        <img src="images/bi.jpg" alt="C" class="product-image" />
+      <!-- ===== BEVERAGES ===== -->
+      <div class="product-card" data-category="beverages" style="display: none;">
+        <img src="images/kf.jpeg" alt="image" class="product-image" />
         <div class="product-info">
-          <div class="product-name">Binto Instant Noodles</div>
-          <div class="product-price">ZMW 7</div>
-          <button class="add-to-cart" data-id="40" data-name="Binto Instant Noodles" data-price="7" data-image="images/bi.jpg">Add to Cart</button>
+          <div class="product-name">Kungfu Energy Drink</div>
+          <div class="product-price">ZMW 15</div>
+          <button class="add-to-cart" data-id="6" data-name="kungfu energy" data-price="15" data-image="images/kf.jpeg">Add to Cart</button>
         </div>
       </div>
-      
-    <div class="product-card">
-      <img src="images/zam.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Zam Instant Noodles</div>
-    <div class="product-price">ZMW  7</div>
-    <button class="add-to-cart" data-id="42" data-name="Zam Instant Noodles" data-price="7" data-image="images/zam.jpg">Add to Cart</button>
-      </div>
-    </div>
-    
-    <div class="product-card">
-      <img src="images/q2.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Quick Drew Tea Bags(100)</div>
-    <div class="product-price">ZMW 55</div>
-    <button class="add-to-cart" data-id="43" data-name="Quick Drew Tea Bags(100)" data-price="55" data-image="images/q2.jpg">Add to Cart</button>
-      </div>
-    </div>
-    
-    <div class="product-card">
-      <img src="images/q1.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Quick Drew Tea Bags(50)</div>
-    <div class="product-price">ZMW 28</div>
-    <button class="add-to-cart" data-id="44" data-name="Quick Drew Tea Bags(50)" data-price="28" data-image="images/q1.jpg">Add to Cart</button>
-      </div>
-    </div>
-    
-    <div class="product-card">
-      <img src="images/aroz.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Arroz Branco White rice (5kg)</div>
-    <div class="product-price">ZMW 165</div>
-    <button class="add-to-cart" data-id="45" data-name="Arroz Branco White rice (5kg)" data-price="165" data-image="images/aroz.jpg">Add to Cart</button>
-      </div>
-    </div>
-    <div class="product-card">
-      <img src="images/aroz.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Arroz Branco White rice (2kg)</div>
-    <div class="product-price">ZMW 70</div>
-    <button class="add-to-cart" data-id="46" data-name="Arroz Branco White rice (2kg)" data-price="70" data-image="images/aroz.jpg">Add to Cart</button>
-      </div>
-    </div>
-    
-    <div class="product-card">
-      <img src="images/r9.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Nakonde  rice (5kg)</div>
-    <div class="product-price"> ZMW  160 </div>
-    <button class="add-to-cart" data-id="47" data-name="Nakonde  rice (5kg)" data-price="160" data-image="images/r9.jpg">Add to Cart</button>
-      </div>
-    </div>
-    <div class="product-card">
-      <img src="images/b9.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Bela Macaroni pasta</div>
-    <div class="product-price">ZMW 118 </div>
-    <button class="add-to-cart" data-id="48" data-name="Bela Macaroni pasta" data-price="118" data-image="images/b9.jpg">Add to Cart</button>
-      </div>
-    </div>
-    <div class="product-card">
-      <img src="images/s9.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Binto T-bone spice</div>
-    <div class="product-price">ZMW 12</div>
-    <button class="add-to-cart" data-id="49" data-name="Binto T-bone spice" data-price="12" data-image="images/s9.jpg">Add to Cart</button>
-      </div>
-    </div>
-    <div class="product-card">
-      <img src="images/s6.jpg" alt="C" class="product-image">
-      <div class="product-info">
-    <div class="product-name">Binto Chicken spice</div>
-    <div class="product-price">ZMW 12</div>
-    <button class="add-to-cart" data-id="50" data-name="Binto Chicken spice" data-price="12" data-image="images/s6.jpg">Add to Cart</button>
-      </div>
-    </div>
-    
-  </div>
-  
 
-  <!-- Cart overlay + sidebar -->
+      <div class="product-card" data-category="beverages" style="display: none;">
+        <img src="images/mj.jpeg" alt="Beans" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Mojo Energy Drink</div>
+          <div class="product-price">ZMW 6</div>
+          <button class="add-to-cart" data-id="6" data-name="Mojo Energy Drink" data-price="6" data-image="images/mj.jpeg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="beverages" style="display: none;">
+        <img src="images/m.jpeg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Mojo Ginger</div>
+          <div class="product-price">ZMW 6</div>
+          <button class="add-to-cart" data-id="23" data-name="Mojo Ginger" data-price="6" data-image="images/m.jpeg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="beverages" style="display: none;">
+        <img src="images/ft.jpeg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">FruiTop (orange)</div>
+          <div class="product-price">ZMW 37</div>
+          <button class="add-to-cart" data-id="24" data-name="fruitop (orange)" data-price="37" data-image="images/ft.jpeg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="beverages" style="display: none;">
+        <img src="images/ft1.jpeg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">FruiTop (grape)</div>
+          <div class="product-price">ZMW 37</div>
+          <button class="add-to-cart" data-id="25" data-name="fruitop (grape)" data-price="37" data-image="images/ft1.jpeg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="beverages" style="display: none;">
+        <img src="images/ft2.jpeg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">FruiTop (granadila)</div>
+          <div class="product-price">ZMW 37</div>
+          <button class="add-to-cart" data-id="26" data-name="fruitop (granadila)" data-price="37" data-image="images/ft2.jpeg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="beverages" style="display: none;">
+        <img src="images/ft2.jpeg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">FruiTop (pineapple)</div>
+          <div class="product-price">ZMW 37</div>
+          <button class="add-to-cart" data-id="27" data-name="fruitop (pineapple)" data-price="37" data-image="images/ft2.jpeg">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- ===== COSMETICS ===== -->
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+        <img src="images/pr.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Protex Soap 150g</div>
+          <div class="product-price">ZMW 20</div>
+          <button class="add-to-cart" data-id="37" data-name="Protex Soap 150g" data-price="20" data-image="images/pr.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+        <img src="images/det.jpg" alt="C" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Dettol Soap 175g</div>
+          <div class="product-price">ZMW 22</div>
+          <button class="add-to-cart" data-id="38" data-name="Dettol Soap 175g" data-price="22" data-image="images/det.jpg">Add to Cart</button>
+        </div>
+      </div>
+
+    </div> <!-- Close .products -->
+
+  </div> <!-- Close .container -->
+
+  <!-- Cart sidebar -->
   <div class="cart-overlay"></div>
-
   <div class="cart-sidebar">
     <div class="cart-header">
       <h2>Your Cart</h2>
       <button class="close-cart">✖</button>
     </div>
-
-    <!-- Delivery Fee Notice (top of cart, as requested) -->
     <div class="delivery-fee">🚚 Delivery starts from K15</div>
-
-    <div class="cart-items"><!-- items injected here --></div>
-
+    <div class="cart-items"></div>
     <div class="cart-total">
       <div class="total-amount">
         <span>Total:</span>
         <span class="total-price">ZMW 0.00</span>
       </div>
       <button class="checkout-btn">Place Order via WhatsApp</button>
-
-      <!-- Payment Methods (all logos visible) -->
       <div class="payment-methods">
         <span>Payment Options:</span>
         <div class="logos">
@@ -1217,18 +1285,15 @@
   </div>
 
   <script>
-    // Theme Toggle Functionality
+    // Theme Toggle
     const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('theme') || 'dark';
-
-    // Set initial theme
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeButton(savedTheme);
 
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
       updateThemeButton(newTheme);
@@ -1249,21 +1314,17 @@
     const totalPriceElement = document.querySelector('.total-price');
     const checkoutBtn = document.querySelector('.checkout-btn');
     const searchInput = document.getElementById('searchInput');
-    const productCards = document.querySelectorAll('.product-card');
-
-    // Suggestion Box Elements
     const suggestionBtn = document.querySelector('.suggestion-btn');
     const suggestionOverlay = document.getElementById('suggestionOverlay');
     const closeSuggestion = document.querySelector('.close-suggestion');
     const sendSuggestionBtn = document.getElementById('sendSuggestion');
     const suggestionText = document.getElementById('suggestionText');
-
-    // Campus Selection Elements
     const campusOverlay = document.getElementById('campusOverlay');
     const closeCampus = document.querySelector('.close-campus');
     const campusOptions = document.querySelectorAll('.campus-option');
+    const categoryTabs = document.querySelectorAll('.category-tab');
 
-    // WhatsApp numbers for each campus
+    // WhatsApp numbers
     const campusNumbers = {
       main: "260750478946",
       ridgeway: "260769209950",
@@ -1273,7 +1334,7 @@
     // Cart data
     let cart = [];
 
-    // Toggle cart visibility
+    // Toggle cart
     cartIcon.addEventListener('click', () => {
       cartOverlay.style.display = 'block';
       cartSidebar.classList.add('active');
@@ -1289,7 +1350,7 @@
       cartOverlay.style.display = 'none';
     });
 
-    // Add to cart functionality
+    // Add to cart
     addToCartButtons.forEach(button => {
       button.addEventListener('click', () => {
         const id = button.getAttribute('data-id');
@@ -1297,32 +1358,21 @@
         const price = parseFloat(button.getAttribute('data-price'));
         const image = button.getAttribute('data-image');
 
-        // Check if item already exists in cart
         const existingItem = cart.find(item => item.id === id);
-
         if (existingItem) {
           existingItem.quantity += 1;
         } else {
-          cart.push({
-            id,
-            name,
-            price,
-            image,
-            quantity: 1
-          });
+          cart.push({ id, name, price, image, quantity: 1 });
         }
-
         updateCart();
       });
     });
 
-    // Update cart UI
+    // Update cart
     function updateCart() {
-      // Update cart count
       const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
       cartCount.textContent = totalItems;
 
-      // Update cart items
       if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
         totalPriceElement.textContent = 'ZMW 0.00';
@@ -1333,7 +1383,6 @@
         cart.forEach(item => {
           const itemTotal = item.price * item.quantity;
           totalPrice += itemTotal;
-
           cartHTML += `
             <div class="cart-item" data-id="${item.id}">
               <img src="${item.image}" alt="${item.name}" class="cart-item-image">
@@ -1353,7 +1402,6 @@
         cartItemsContainer.innerHTML = cartHTML;
         totalPriceElement.textContent = `ZMW ${totalPrice.toFixed(2)}`;
 
-        // Add event listeners to quantity buttons
         document.querySelectorAll('.quantity-btn.minus').forEach(button => {
           button.addEventListener('click', (e) => {
             const itemId = e.target.closest('.cart-item').getAttribute('data-id');
@@ -1370,33 +1418,28 @@
       }
     }
 
-    // Update item quantity
+    // Update quantity
     function updateQuantity(itemId, change) {
       const itemIndex = cart.findIndex(item => item.id === itemId);
-
       if (itemIndex !== -1) {
         cart[itemIndex].quantity += change;
-
-        // Remove item if quantity reaches 0
         if (cart[itemIndex].quantity <= 0) {
           cart.splice(itemIndex, 1);
         }
-
         updateCart();
       }
     }
 
-    // WhatsApp checkout functionality: show campus selection first
+    // WhatsApp checkout
     checkoutBtn.addEventListener('click', () => {
       if (cart.length === 0) {
         alert('Your cart is empty!');
         return;
       }
-      // Show campus selection modal
       campusOverlay.style.display = 'flex';
     });
 
-    // Campus selection functionality
+    // Campus selection
     campusOptions.forEach(option => {
       option.addEventListener('click', () => {
         const campus = option.getAttribute('data-campus');
@@ -1416,9 +1459,7 @@
     });
 
     function sendWhatsAppOrder(campus) {
-      // Create order message
-      let message =
-        `Hello! I'd like to order from ${campus === 'main' ? 'Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : 'Other Universities'}:\n\n`;
+      let message = `Hello! I'd like to order from ${campus === 'main' ? 'Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : 'Other Universities'}:\n\n`;
       let total = 0;
 
       cart.forEach(item => {
@@ -1430,17 +1471,12 @@
       message += `\nTotal: ZMW ${total.toFixed(2)}`;
       message += "\n\nPlease confirm my order. Thank you!";
 
-      // Encode message for WhatsApp URL
       const encodedMessage = encodeURIComponent(message);
-
-      // Get the appropriate WhatsApp number based on campus selection
       const whatsappNumber = campusNumbers[campus];
-
-      // Open WhatsApp with the order message
       window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
     }
 
-    // Suggestion Box functionality
+    // Suggestion Box
     suggestionBtn.addEventListener('click', () => {
       suggestionOverlay.style.display = 'flex';
     });
@@ -1453,30 +1489,18 @@
     sendSuggestionBtn.addEventListener('click', () => {
       const suggestion = suggestionText.value.trim();
       if (suggestion) {
-        // Use main campus number for suggestions
         const whatsappNumber = campusNumbers.main;
-
-        // Create suggestion message
         const message = `New Product Suggestion:\n\n${suggestion}`;
-
-        // Encode message for WhatsApp URL
         const encodedMessage = encodeURIComponent(message);
-
-        // Open WhatsApp with the suggestion message
         window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-
-        // Close the suggestion box and clear the input
         suggestionOverlay.style.display = 'none';
         suggestionText.value = '';
-
-        // Optional: Show confirmation
         alert('Thank you for your suggestion! We will review it soon.');
       } else {
         alert('Please enter a product suggestion before sending.');
       }
     });
 
-    // Close suggestion box when clicking outside
     suggestionOverlay.addEventListener('click', (e) => {
       if (e.target === suggestionOverlay) {
         suggestionOverlay.style.display = 'none';
@@ -1484,29 +1508,78 @@
       }
     });
 
-    // Search functionality
-    searchInput.addEventListener('input', () => {
-      const searchTerm = searchInput.value.toLowerCase();
-
-      productCards.forEach((card) => {
-        const name = card.querySelector('.product-name').textContent.toLowerCase();
-        card.style.display = name.includes(searchTerm) ? 'block' : 'none';
+    // ====== CATEGORY FUNCTIONALITY ======
+    categoryTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Update active tab
+        categoryTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        const selectedCategory = tab.getAttribute('data-category');
+        
+        // Update search placeholder
+        searchInput.placeholder = `Search ${selectedCategory}...`;
+        
+        // Get all products
+        const allProducts = document.querySelectorAll('.product-card');
+        
+        // Show/hide products based on category
+        allProducts.forEach(product => {
+          const productCategory = product.getAttribute('data-category');
+          
+          if (selectedCategory === 'groceries') {
+            product.style.display = productCategory === 'groceries' ? 'block' : 'none';
+          } else if (selectedCategory === 'beverages') {
+            product.style.display = productCategory === 'beverages' ? 'block' : 'none';
+          } else if (selectedCategory === 'cosmetics') {
+            product.style.display = productCategory === 'cosmetics' ? 'block' : 'none';
+          }
+        });
+        
+        // Apply search filter if there's a search term
+        if (searchInput.value.trim() !== '') {
+          const searchTerm = searchInput.value.toLowerCase();
+          const visibleProducts = document.querySelectorAll('.product-card[style="display: block"]');
+          
+          visibleProducts.forEach(product => {
+            const name = product.querySelector('.product-name').textContent.toLowerCase();
+            product.style.display = name.includes(searchTerm) ? 'block' : 'none';
+          });
+        }
       });
     });
 
-    // Service Worker registration + update prompt
+    // Search functionality
+    searchInput.addEventListener('input', () => {
+      const searchTerm = searchInput.value.toLowerCase();
+      const activeTab = document.querySelector('.category-tab.active');
+      const selectedCategory = activeTab ? activeTab.getAttribute('data-category') : 'groceries';
+      
+      const allProducts = document.querySelectorAll('.product-card');
+      
+      allProducts.forEach(product => {
+        const productCategory = product.getAttribute('data-category');
+        const name = product.querySelector('.product-name').textContent.toLowerCase();
+        
+        // First check if product belongs to current category
+        if (productCategory === selectedCategory) {
+          // Then check search term
+          product.style.display = name.includes(searchTerm) ? 'block' : 'none';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    });
+
+    // Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
           .then(reg => {
             console.log('✅ Service Worker Registered');
-
-            // Check for new updates
             reg.addEventListener('updatefound', () => {
               const newWorker = reg.installing;
-
               newWorker.addEventListener('statechange', () => {
-                // Only notify if there's already an active service worker
                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                   if (confirm("🆕 A new version is available. Update now?")) {
                     window.location.reload();
