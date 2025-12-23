@@ -633,6 +633,14 @@
       .cart-sidebar {
         width: 90%;
       }
+      
+      .category-tabs {
+        flex-wrap: wrap;
+      }
+      
+      .category-tab {
+        min-width: 25%;
+      }
     }
 
     @media (max-width: 480px) {
@@ -647,11 +655,13 @@
       
       .category-tabs {
         flex-direction: row;
+        flex-wrap: wrap;
       }
       
       .category-tab {
         padding: 10px 5px;
-        font-size: 14px;
+        font-size: 12px;
+        min-width: 25%;
       }
     }
 
@@ -711,13 +721,13 @@
       <button class="suggestion-btn">SUGGEST A PRODUCT</button>
     </div>
 
-    <!-- Category Tabs - HORIZONTAL -->
+    <!-- Category Tabs - HORIZONTAL (NOW WITH CAMPUS STORE) -->
     <div class="category-tabs">
       <button class="category-tab active" data-category="groceries">Groceries</button>
       <button class="category-tab" data-category="beverages">Beverages</button>
       <button class="category-tab" data-category="cosmetics">Cosmetics</button>
+      <button class="category-tab" data-category="campus-store">Campus Store</button>
     </div>
-
     <!-- ALL PRODUCTS -->
     <div class="products">
       
@@ -1071,12 +1081,28 @@
 
       <!-- Washing Powder -->
       <div class="product-card" data-category="groceries">
-        <img src="images/a1.jpg" alt="C" class="product-image" />
+      <img src="images/a1.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Aloha Hand Washing Powder 1.8Kg</div>
+      <div class="product-price">ZMW 110</div>
+      <button class="add-to-cart" data-id="30" data-name="Aloha Hand Washing Powder 1.8Kg" data-price="110" data-image="images/a1.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="groceries">
+        <img src="images/alo6.jpg" alt="C" class="product-image" />
         <div class="product-info">
-          <div class="product-name">Aloha Hand Washing Powder 1.8Kg</div>
-          <div class="product-price">ZMW 110</div>
-          <button class="add-to-cart" data-id="30" data-name="Aloha Hand Washing Powder 1.8Kg" data-price="110" data-image="images/a1.jpg">Add to Cart</button>
+          <div class="product-name">Aloha Hand Washing Powder 500g</div>
+          <div class="product-price">ZMW 36</div>
+          <button class="add-to-cart" data-id="30" data-name="Aloha Hand Washing Powder 500g" data-price="36" data-image="images/alo6.jpg">Add to Cart</button>
         </div>
+      </div>
+      <div class="product-card" data-category="groceries">
+      <img src="images/alo7.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Aloha Hand Washing Powder 150g</div>
+      <div class="product-price">ZMW 19</div>
+      <button class="add-to-cart" data-id="30" data-name="Aloha Hand Washing Powder 150g" data-price="19" data-image="images/alo7.jpg">Add to Cart</button>
+      </div>
       </div>
 
       <div class="product-card" data-category="groceries">
@@ -1145,12 +1171,28 @@
       </div>
 
       <!-- ===== BEVERAGES ===== -->
-          <div class="product-card" data-category="beverages" style="display: none;">
+      <div class="product-card" data-category="beverages" style="display: none;">
       <img src="images/beer8.jpg" alt="C" class="product-image" />
       <div class="product-info">
-      <div class="product-name">Flying Fish </div>
+      <div class="product-name">FLYING FISH </div>
       <div class="product-price">ZMW 30</div>
       <button class="add-to-cart" data-id="69" data-name="Flying Fish" data-price="30" data-image="images/beer8.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/00.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">BRUTAL FRUIT</div>
+      <div class="product-price">ZMW 30</div>
+      <button class="add-to-cart" data-id="69" data-name="BRUTAL FRIUT" data-price="30" data-image="images/00.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/beer.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Savana PREMIUM CIDER </div>
+      <div class="product-price">ZMW 30</div>
+      <button class="add-to-cart" data-id="69" data-name="Savana PREMIUM CIDER" data-price="30" data-image="images/beer.jpg">Add to Cart</button>
       </div>
       </div>
       
@@ -1160,6 +1202,14 @@
       <div class="product-name">Fruticana Red Smoothie</div>
       <div class="product-price">ZMW 15</div>
       <button class="add-to-cart" data-id="66" data-name="Fruticana Red Smoothie" data-price="15" data-image="images/cana3.jpeg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/drink5.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Lifeway Shot BEETROOT(200ml)</div>
+      <div class="product-price">ZMW 16</div>
+      <button class="add-to-cart" data-id="66" data-name="Lifeway Shot BEETROOT (200ml)" data-price="16" data-image="images/drink5.jpg">Add to Cart</button>
       </div>
       </div>
       
@@ -1179,39 +1229,54 @@
       <button class="add-to-cart" data-id="68" data-name="Fruticana Yellow Smoothie" data-price="15" data-image="images/cana1.jpg">Add to Cart</button>
       </div>
       </div>
-         <div class="product-card" data-category="beverages" style="display: none;">
-      <img src="images/just2.jpg" alt="C" class="product-image" />
-      <div class="product-info">
-      <div class="product-name">Just Juice (Orange )</div>
-      <div class="product-price">ZMW 52</div>
-      <button class="add-to-cart" data-id="64" data-name="Just Juice (Orange)" data-price="52" data-image="images/just2.jpg">Add to Cart</button>
-      </div>
-      </div>
-      
       <div class="product-card" data-category="beverages" style="display: none;">
-      <img src="images/just2.jpg" alt="C" class="product-image" />
+      <img src="images/5.jpg" alt="C" class="product-image" />
       <div class="product-info">
-      <div class="product-name">Just Juice (pineapple )</div>
-      <div class="product-price">ZMW 52</div>
-      <button class="add-to-cart" data-id="65" data-name="Just Juice (Pineapple)" data-price="52" data-image="images/just2.jpg">Add to Cart</button>
+      <div class="product-name">Fruticana Mango </div>
+      <div class="product-price">ZMW 13</div>
+      <button class="add-to-cart" data-id="68" data-name="Fruticana Mango" data-price="13" data-image="images/7.jpg">Add to Cart</button>
       </div>
       </div>
-      
       <div class="product-card" data-category="beverages" style="display: none;">
-        <img src="images/kf.jpeg" alt="image" class="product-image" />
+      <img src="images/77.jpeg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Fruticana  Orange </div>
+      <div class="product-price">ZMW 13</div>
+      <button class="add-to-cart" data-id="68" data-name="Fruticana Orange" data-price="13" data-image="images/77.jpeg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/66.jpeg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Fruticana  Guava</div>
+      <div class="product-price">ZMW 13</div>
+      <button class="add-to-cart" data-id="68" data-name="Fruticana Guava" data-price="13" data-image="images/66.jpeg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/0.jpeg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Fruticana Mixed Fruit  </div>
+      <div class="product-price">ZMW 13</div>
+      <button class="add-to-cart" data-id="68" data-name="Fruticana Mixed Fruit " data-price="13" data-image="images/0.jpeg">Add to Cart</button>
+      </div>
+      </div>
+     
+      <div class="product-card" data-category="beverages" style="display: none;">
+        <img src="images/drink9.jpg" alt="image" class="product-image" />
         <div class="product-info">
           <div class="product-name">Kungfu Energy Drink</div>
           <div class="product-price">ZMW 15</div>
-          <button class="add-to-cart" data-id="6" data-name="kungfu energy" data-price="15" data-image="images/kf.jpeg">Add to Cart</button>
+          <button class="add-to-cart" data-id="6" data-name="kungfu energy" data-price="15" data-image="images/drink9.jpg">Add to Cart</button>
         </div>
       </div>
 
       <div class="product-card" data-category="beverages" style="display: none;">
-        <img src="images/mj.jpeg" alt="Beans" class="product-image" />
+        <img src="images/mj2.png" alt="Beans" class="product-image" />
         <div class="product-info">
           <div class="product-name">Mojo Energy Drink</div>
           <div class="product-price">ZMW 6</div>
-          <button class="add-to-cart" data-id="6" data-name="Mojo Energy Drink" data-price="6" data-image="images/mj.jpeg">Add to Cart</button>
+          <button class="add-to-cart" data-id="6" data-name="Mojo Energy Drink" data-price="6" data-image="images/mj2.png">Add to Cart</button>
         </div>
       </div>
 
@@ -1259,8 +1324,165 @@
           <button class="add-to-cart" data-id="27" data-name="fruitop (pineapple)" data-price="37" data-image="images/ft2.jpeg">Add to Cart</button>
         </div>
       </div>
+      
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/just2.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Just Juice (Orange )</div>
+      <div class="product-price">ZMW 52</div>
+      <button class="add-to-cart" data-id="64" data-name="Just Juice (Orange)" data-price="52" data-image="images/just2.jpg">Add to Cart</button>
+      </div>
+      </div>
+      
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/just2.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Just Juice (pineapple )</div>
+      <div class="product-price">ZMW 52</div>
+      <button class="add-to-cart" data-id="65" data-name="Just Juice (Pineapple)" data-price="52" data-image="images/just2.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/41.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Black Label Canned 6pac </div>
+      <div class="product-price">ZMW 95</div>
+      <button class="add-to-cart" data-id="68" data-name="Black Label Canned 6pac" data-price="95" data-image="images/41.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/97.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">GORDONS LONDON DRY GIN</div>
+      <div class="product-price">ZMW 205</div>
+      <button class="add-to-cart" data-id="68" data-name="GORDONS LANDON DRY GIN" data-price="205" data-image="images/97.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/zz2.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Hunters Dry 6pac </div>
+      <div class="product-price">ZMW 98</div>
+      <button class="add-to-cart" data-id="68" data-name="Hunters Dry 6pac" data-price="98" data-image="images/zz2.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/zz1.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Heineken Lager Beer 6pac </div>
+      <div class="product-price">ZMW 100</div>
+      <button class="add-to-cart" data-id="68" data-name="Heineken Lager Beer 6pac" data-price="100" data-image="images/zz1.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/23.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Four Cousins Natural sweet Red</div>
+      <div class="product-price">ZMW 235</div>
+      <button class="add-to-cart" data-id="68" data-name="Four Cousins Natural Sweet Red" data-price="235" data-image="images/23.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/55.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Grant's  </div>
+      <div class="product-price">ZMW 285</div>
+      <button class="add-to-cart" data-id="68" data-name="Grant's" data-price="285" data-image="images/55.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="beverages" style="display: none;">
+      <img src="images/red.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">RED CUBE</div>
+      <div class="product-price">ZMW 165</div>
+      <button class="add-to-cart" data-id="68" data-name="RED CUBE" data-price="165" data-image="images/red.jpg">Add to Cart</button>
+      </div>
+      </div>
+      
 
       <!-- ===== COSMETICS ===== -->
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/2.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Whitedent Herbal Tooth Paste</div>
+      <div class="product-price">ZMW 20</div>
+      <button class="add-to-cart" data-id="37" data-name="Whitedent Herbal Tooth Paste" data-price="20" data-image="images/2.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/men.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">CLAIRMEN LOTION (120ml)</div>
+      <div class="product-price">ZMW 35</div>
+      <button class="add-to-cart" data-id="37" data-name="CLAIRMEN (120ml)" data-price="35" data-image="images/men.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/t0.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Family Compact Toilet paper (2ply.4rolls)</div>
+      <div class="product-price">ZMW 46</div>
+      <button class="add-to-cart" data-id="37" data-name="Family Compact Toilet Paper (2ply.4rolls)" data-price="46" data-image="images/t00.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/t00.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">New All-Day Toilet Paper (1×10rolls)</div>
+      <div class="product-price">ZMW 69</div>
+      <button class="add-to-cart" data-id="37" data-name="New All-Day Toilet Paper(1×10rolls)" data-price="69" data-image="images/t00.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/movit.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Movit Hair Food with Avocado Oil (200g)</div>
+      <div class="product-price">ZMW 30</div>
+      <button class="add-to-cart" data-id="37" data-name="Movit Hair Food with Avocado Oil 200g" data-price="30" data-image="images/movit.jpg">Add to Cart</button>
+      </div>
+      </div>
+     <div class="product-card" data-category="cosmetics" style="display: none;">
+     <img src="images/movit1.jpg" alt="C" class="product-image" />
+     <div class="product-info">
+     <div class="product-name">Movit Curl Activator Hair Gel </div>
+     <div class="product-price">ZMW 20</div>
+     <button class="add-to-cart" data-id="37" data-name="Movit Curl Activator Hair Gel" data-price="20" data-image="images/movit1.jpg">Add to Cart</button>
+     </div>
+     </div>
+     <div class="product-card" data-category="cosmetics" style="display: none;">
+     <img src="images/kotex.jpg" alt="C" class="product-image" />
+     <div class="product-info">
+     <div class="product-name">Kotex Sanitary Pads (8)</div>
+     <div class="product-price">ZMW 20</div>
+     <button class="add-to-cart" data-id="37" data-name="kotex Sanitary Pads (8)" data-price="20" data-image="images/kotex.jpg">Add to Cart</button>
+     </div>
+     </div>
+      
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/pad1.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Softcare (A+) Sanitary Pads</div>
+      <div class="product-price">ZMW 40</div>
+      <button class="add-to-cart" data-id="37" data-name="Softcare (A+) Sanitary pads" data-price="40" data-image="images/pad1.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/pad.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Always Discreet Sanitary Pads(26)</div>
+      <div class="product-price">ZMW 30</div>
+      <button class="add-to-cart" data-id="37" data-name="Always Discreet Sanitary Pad" data-price="35" data-image="images/pads.jpg">Add to Cart</button>
+      </div>
+      </div>
+      <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/pad3.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Always Airy Soft Sanitary Pads (10)</div>
+      <div class="product-price">ZMW 20</div>
+      <button class="add-to-cart" data-id="37" data-name="Always Airy Soft Sanitary Pads(10)" data-price="20" data-image="images/pad3.jpg">Add to Cart</button>
+      </div>
+      </div>
+      
       <div class="product-card" data-category="cosmetics" style="display: none;">
         <img src="images/pr.jpg" alt="C" class="product-image" />
         <div class="product-info">
@@ -1271,14 +1493,14 @@
       </div>
 
       <div class="product-card" data-category="cosmetics" style="display: none;">
-        <img src="images/det.jpg" alt="C" class="product-image" />
+        <img src="images/d5.jpg" alt="C" class="product-image" />
         <div class="product-info">
-          <div class="product-name">Dettol Soap 175g</div>
-          <div class="product-price">ZMW 22</div>
-          <button class="add-to-cart" data-id="38" data-name="Dettol Soap 175g" data-price="22" data-image="images/det.jpg">Add to Cart</button>
+          <div class="product-name">Dettol+ Original  Soap </div>
+          <div class="product-price">ZMW 24</div>
+          <button class="add-to-cart" data-id="38" data-name="Dettol Soap 175g" data-price="24" data-image="images/d5.jpg">Add to Cart</button>
         </div>
       </div>
-         <div class="product-card" data-category="cosmetics" style="display: none;">
+      <div class="product-card" data-category="cosmetics" style="display: none;">
       <img src="images/v2.jpg" alt="C" class="product-image" />
       <div class="product-info">
       <div class="product-name">Vaseline Men Extra Strength (295ml)</div>
@@ -1367,6 +1589,15 @@
       </div>
       </div>
       <div class="product-card" data-category="cosmetics" style="display: none;">
+      <img src="images/roll.jpg" alt="C" class="product-image" />
+      <div class="product-info">
+      <div class="product-name">Shower to Shower Roll-On</div>
+      <div class="product-price">ZMW 25</div>
+      <button class="add-to-cart" data-id="37" data-name="Shower to Shower Roll-On" data-price="25" data-image="images/roll.jpg">Add to Cart</button>
+      </div>
+      </div>
+      
+      <div class="product-card" data-category="cosmetics" style="display: none;">
       <img src="images/ni5.jpg" alt="C" class="product-image" />
       <div class="product-info">
       <div class="product-name">NIVEA MEN Body Lotion Deep Impact</div>
@@ -1383,10 +1614,29 @@
       </div>
       </div>
 
-    </div> <!-- Close .products -->
+<!-- ===== CAMPUS STORE ===== -->
+     <div class="product-card" data-category="campus-store" style="display: none;">
+       <img src="images/nike.jpg" alt="Student Product" class="product-image" />
+       <div class="product-info">
+         <div class="product-name"> white Nike Airforce </div>
+         <div class="product-price">ZMW 300</div>
+         <button class="add-to-cart" data-id="101" data-name="White Nike Airforce" data-price="25" data-image="images/nike.jpg">Add to Cart</button>
+       </div>
+     </div>
 
-  </div> <!-- Close .container -->
+     <div class="product-card" data-category="campus-store" style="display: none;">
+       <img src="images/mango.jpg" alt="Student Product" class="product-image" />
+       <div class="product-info">
+         <div class="product-name">MG Air4 Pods</div>
+         <div class="product-price">ZMW 190</div>
+         <button class="add-to-cart" data-id="102" data-name="MG Air4 Pods" data-price="190" data-image="images/mango.jpg">Add to Cart</button>
+       </div>
+     </div>
+   </div> <!-- Close .products -->
 
+ </div> <!-- Close .container -->
+
+ 
   <!-- Cart sidebar -->
   <div class="cart-overlay"></div>
   <div class="cart-sidebar">
@@ -1412,19 +1662,19 @@
       </div>
     </div>
   </div>
-
+  
   <!-- Suggestion overlay -->
   <div class="suggestion-overlay" id="suggestionOverlay">
     <div class="suggestion-box">
       <div class="suggestion-header">
-        <div class="suggestion-title">Suggest a Product</div>
+        <div class="suggestion-title">Suggest a Product or grow your business with us</div>
         <button class="close-suggestion">✖</button>
       </div>
-      <textarea id="suggestionText" class="suggestion-input" placeholder="Tell us what product you need us to add to the website just for you..."></textarea>
+      <textarea id="suggestionText" class="suggestion-input" placeholder="Tell us what product you need us to add to the website just for you or contact us to add your product/s on campus store. #Grow your business with us."></textarea>
       <button id="sendSuggestion" class="send-suggestion">Send via WhatsApp</button>
     </div>
   </div>
-
+  
   <!-- Campus selection overlay -->
   <div class="campus-overlay" id="campusOverlay">
     <div class="campus-box">
@@ -1439,14 +1689,14 @@
       </div>
     </div>
   </div>
-
+  
   <script>
     // Theme Toggle
     const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeButton(savedTheme);
-
+  
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -1454,11 +1704,11 @@
       localStorage.setItem('theme', newTheme);
       updateThemeButton(newTheme);
     });
-
+  
     function updateThemeButton(theme) {
       themeToggle.textContent = theme === 'dark' ? '🌙' : '🌞';
     }
-
+  
     // DOM Elements
     const cartIcon = document.querySelector('.cart-icon');
     const cartCount = document.querySelector('.cart-count');
@@ -1479,33 +1729,33 @@
     const closeCampus = document.querySelector('.close-campus');
     const campusOptions = document.querySelectorAll('.campus-option');
     const categoryTabs = document.querySelectorAll('.category-tab');
-
+  
     // WhatsApp numbers
     const campusNumbers = {
       main: "260750478946",
       ridgeway: "260769209950",
       other: "260766612581"
     };
-
+  
     // Cart data
     let cart = [];
-
+  
     // Toggle cart
     cartIcon.addEventListener('click', () => {
       cartOverlay.style.display = 'block';
       cartSidebar.classList.add('active');
     });
-
+  
     closeCart.addEventListener('click', () => {
       cartSidebar.classList.remove('active');
       cartOverlay.style.display = 'none';
     });
-
+  
     cartOverlay.addEventListener('click', () => {
       cartSidebar.classList.remove('active');
       cartOverlay.style.display = 'none';
     });
-
+  
     // Add to cart
     addToCartButtons.forEach(button => {
       button.addEventListener('click', () => {
@@ -1513,7 +1763,7 @@
         const name = button.getAttribute('data-name');
         const price = parseFloat(button.getAttribute('data-price'));
         const image = button.getAttribute('data-image');
-
+  
         const existingItem = cart.find(item => item.id === id);
         if (existingItem) {
           existingItem.quantity += 1;
@@ -1523,19 +1773,19 @@
         updateCart();
       });
     });
-
+  
     // Update cart
     function updateCart() {
       const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
       cartCount.textContent = totalItems;
-
+  
       if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
         totalPriceElement.textContent = 'ZMW 0.00';
       } else {
         let cartHTML = '';
         let totalPrice = 0;
-
+  
         cart.forEach(item => {
           const itemTotal = item.price * item.quantity;
           totalPrice += itemTotal;
@@ -1554,17 +1804,17 @@
             </div>
           `;
         });
-
+  
         cartItemsContainer.innerHTML = cartHTML;
         totalPriceElement.textContent = `ZMW ${totalPrice.toFixed(2)}`;
-
+  
         document.querySelectorAll('.quantity-btn.minus').forEach(button => {
           button.addEventListener('click', (e) => {
             const itemId = e.target.closest('.cart-item').getAttribute('data-id');
             updateQuantity(itemId, -1);
           });
         });
-
+  
         document.querySelectorAll('.quantity-btn.plus').forEach(button => {
           button.addEventListener('click', (e) => {
             const itemId = e.target.closest('.cart-item').getAttribute('data-id');
@@ -1573,7 +1823,7 @@
         });
       }
     }
-
+  
     // Update quantity
     function updateQuantity(itemId, change) {
       const itemIndex = cart.findIndex(item => item.id === itemId);
@@ -1585,7 +1835,7 @@
         updateCart();
       }
     }
-
+  
     // WhatsApp checkout
     checkoutBtn.addEventListener('click', () => {
       if (cart.length === 0) {
@@ -1594,7 +1844,7 @@
       }
       campusOverlay.style.display = 'flex';
     });
-
+  
     // Campus selection
     campusOptions.forEach(option => {
       option.addEventListener('click', () => {
@@ -1603,49 +1853,49 @@
         campusOverlay.style.display = 'none';
       });
     });
-
+  
     closeCampus.addEventListener('click', () => {
       campusOverlay.style.display = 'none';
     });
-
+  
     campusOverlay.addEventListener('click', (e) => {
       if (e.target === campusOverlay) {
         campusOverlay.style.display = 'none';
       }
     });
-
+  
     function sendWhatsAppOrder(campus) {
       let message = `Hello! I'd like to order from ${campus === 'main' ? 'Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : 'Other Universities'}:\n\n`;
       let total = 0;
-
+  
       cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
         message += `${item.name} x ${item.quantity} = ZMW ${itemTotal.toFixed(2)}\n`;
       });
-
+  
       message += `\nTotal: ZMW ${total.toFixed(2)}`;
       message += "\n\nPlease confirm my order. Thank you!";
-
+  
       const encodedMessage = encodeURIComponent(message);
       const whatsappNumber = campusNumbers[campus];
       window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
     }
-
+  
     // Suggestion Box
     suggestionBtn.addEventListener('click', () => {
       suggestionOverlay.style.display = 'flex';
     });
-
+  
     closeSuggestion.addEventListener('click', () => {
       suggestionOverlay.style.display = 'none';
       suggestionText.value = '';
     });
-
+  
     sendSuggestionBtn.addEventListener('click', () => {
       const suggestion = suggestionText.value.trim();
       if (suggestion) {
-        const whatsappNumber = campusNumbers.main;
+        const whatsappNumber = campusNumbers.other;
         const message = `New Product Suggestion:\n\n${suggestion}`;
         const encodedMessage = encodeURIComponent(message);
         window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
@@ -1656,14 +1906,14 @@
         alert('Please enter a product suggestion before sending.');
       }
     });
-
+  
     suggestionOverlay.addEventListener('click', (e) => {
       if (e.target === suggestionOverlay) {
         suggestionOverlay.style.display = 'none';
         suggestionText.value = '';
       }
     });
-
+  
     // ====== CATEGORY FUNCTIONALITY ======
     categoryTabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -1689,6 +1939,8 @@
             product.style.display = productCategory === 'beverages' ? 'block' : 'none';
           } else if (selectedCategory === 'cosmetics') {
             product.style.display = productCategory === 'cosmetics' ? 'block' : 'none';
+          } else if (selectedCategory === 'campus-store') {
+            product.style.display = productCategory === 'campus-store' ? 'block' : 'none';
           }
         });
         
@@ -1704,7 +1956,7 @@
         }
       });
     });
-
+  
     // Search functionality
     searchInput.addEventListener('input', () => {
       const searchTerm = searchInput.value.toLowerCase();
@@ -1726,7 +1978,7 @@
         }
       });
     });
-
+  
     // Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -1747,5 +1999,5 @@
       });
     }
   </script>
-</body>
-</html>
+  </body>
+  </html>
