@@ -133,30 +133,36 @@
       margin: 0 auto;
     }
 
-    /* Category Tabs - HORIZONTAL */
-    .category-tabs {
-      display: flex;
-      background-color: var(--navy);
-      border-radius: 8px;
-      overflow: hidden;
+    /* Category Tabs - Horizontal Scroll, no borders */
+    .category-tabs-wrapper {
+      overflow-x: auto;
+      white-space: nowrap;
       margin-bottom: 20px;
-      border: 1px solid var(--light-blue);
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .category-tabs {
+      display: inline-flex;
+      gap: 8px;
+      background: transparent;
+      padding-bottom: 5px;
     }
 
     .category-tab {
-      flex: 1;
-      padding: 12px 0;
-      text-align: center;
-      background: none;
+      padding: 10px 20px;
+      background: rgba(100, 255, 218, 0.1);
       border: none;
       color: var(--text-light);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      border-radius: 30px;
+      font-size: 0.95rem;
     }
 
     .category-tab:hover {
-      background-color: rgba(100, 255, 218, 0.1);
+      background-color: rgba(100, 255, 218, 0.2);
     }
 
     .category-tab.active {
@@ -188,14 +194,14 @@
 
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 20px;
     }
 
+    /* Product Card - No border, subtle background */
     .product-card {
       background: rgba(100, 255, 218, 0.05);
-      border: 1px solid var(--light-blue);
-      border-radius: 15px;
+      border-radius: 12px;
       overflow: hidden;
       box-shadow: var(--shadow);
       transition: transform 0.3s ease;
@@ -203,7 +209,6 @@
 
     .product-card:hover {
       transform: translateY(-5px);
-      border-color: var(--text-light);
     }
 
     .product-image {
@@ -213,31 +218,35 @@
     }
 
     .product-info {
-      padding: 15px;
+      padding: 12px;
     }
 
     .product-name {
-      font-weight: 600;
+      font-weight: 500;
       margin-bottom: 5px;
       color: var(--text-light);
+      font-size: 0.85rem;
+      line-height: 1.3;
     }
 
     .product-price {
       color: var(--light-blue);
       font-weight: bold;
       margin-bottom: 10px;
+      font-size: 0.9rem;
     }
 
     .add-to-cart {
       background-color: var(--navy);
       color: var(--light-blue);
       border: 1px solid var(--light-blue);
-      padding: 8px 15px;
+      padding: 6px 12px;
       border-radius: 5px;
       cursor: pointer;
-      width: 90%;
+      width: 100%;
       font-weight: 600;
       transition: all 0.3s;
+      font-size: 0.8rem;
     }
 
     .add-to-cart:hover {
@@ -324,11 +333,13 @@
       font-weight: 500;
       margin-bottom: 5px;
       color: var(--text-light);
+      font-size: 0.85rem;
     }
 
     .cart-item-price {
       color: var(--light-blue);
       font-weight: bold;
+      font-size: 0.85rem;
     }
 
     .quantity-control {
@@ -555,7 +566,7 @@
 
     [data-theme="light"] body {
       background-color: var(--dark-blue);
-      color: black(--text-light);
+      color: var(--text-light);
     }
 
     [data-theme="light"] .main-header {
@@ -565,7 +576,6 @@
 
     [data-theme="light"] .product-card {
       background: rgba(10, 25, 47, 0.05);
-      border: 1px solid var(--light-blue);
     }
 
     [data-theme="light"] .search-bar {
@@ -593,13 +603,8 @@
       background-color: var(--navy);
     }
 
-    [data-theme="light"] .category-tabs {
-      background-color: var(--navy);
-      border: 1px solid var(--light-blue);
-    }
-
     [data-theme="light"] .category-tab {
-      color: var(--text-light);
+      background: rgba(10, 25, 47, 0.1);
     }
 
     [data-theme="light"] .category-tab.active {
@@ -634,34 +639,24 @@
         width: 90%;
       }
 
-      .category-tabs {
-        flex-wrap: wrap;
-      }
-
       .category-tab {
-        min-width: 25%;
+        padding: 8px 16px;
+        font-size: 0.85rem;
       }
     }
 
     @media (max-width: 480px) {
       .products {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 15px;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
       }
 
       .product-image {
-        height: 120px;
+        height: 100px;
       }
 
-      .category-tabs {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      .category-tab {
-        padding: 10px 5px;
-        font-size: 10.9px;
-        min-width: 25%;
+      .product-name {
+        font-size: 0.75rem;
       }
     }
 
@@ -709,7 +704,7 @@
   <header class="main-header">
     <div class="header-content">
       <div class="logo-row">
-        <div class="logo">Campus Cart🛒</div>
+        <div class="logo">Campus Cart</div>
         <div class="header-controls">
           <button class="theme-toggle" id="themeToggle">🌙</button>
           <div class="cart-icon">
@@ -719,7 +714,7 @@
         </div>
       </div>
       <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search groceries..." id="searchInput" />
+        <input type="text" class="search-bar" placeholder="Search on Campus Cart..." id="searchInput" />
       </div>
     </div>
   </header>
@@ -731,17 +726,22 @@
       <button class="suggestion-btn">SUGGEST A PRODUCT</button>
     </div>
 
-    <!-- Category Tabs - HORIZONTAL (NOW WITH CAMPUS STORE) -->
-    <div class="category-tabs">
-      <button class="category-tab active" data-category="groceries">Groceries</button>
-      <button class="category-tab" data-category="beverages">Beverages</button>
-      <button class="category-tab" data-category="cosmetics">Cosmetics</button>
-      <button class="category-tab" data-category="campus-store">Campus Store</button>
+    <!-- Category Tabs - Horizontal Scrollable, No Borders -->
+    <div class="category-tabs-wrapper">
+      <div class="category-tabs">
+        <button class="category-tab active" data-category="all">All</button>
+        <button class="category-tab" data-category="groceries">Groceries</button>
+        <button class="category-tab" data-category="beverages">Beverages</button>
+        <button class="category-tab" data-category="cosmetics">Cosmetics</button>
+        <button class="category-tab" data-category="fast-food">Fast Food</button>
+        <button class="category-tab" data-category="campus-store">Campus Store</button>
+      </div>
     </div>
-    <!-- ALL PRODUCTS -->
-    <div class="products">
 
-      <!-- ===== GROCERIES ===== -->
+    <!-- ALL PRODUCTS (same as before, with fast food added) -->
+    <div class="products">
+      <!-- ===== GROCERIES (all existing products remain) ===== -->
+      <!-  <!-- ===== GROCERIES ===== -->
       <!-- Rice & Grains -->
       <div class="product-card" data-category="groceries">
       <img src="images/h7.jpg" alt="Rice" class="product-image" />
@@ -5113,10 +5113,95 @@
              data-delivery-tier="[9,14,19,24,29,34,39,44,49,54]">Add to Cart</button>
      </div>
      </div>
-   </div> <!-- Close .products -->
-
- </div> <!-- Close .container -->
-
+      
+      <!-- ===== FAST FOOD (New category) ===== -->
+      <div class="product-card" data-category="fast-food">
+        <img src="images/fastfood1.jpg" alt="Chips & Chicken" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Chips & Chicken (with drink)</div>
+          <div class="product-price">ZMW 65</div>
+          <button class="add-to-cart" 
+                  data-id="fast1" 
+                  data-name="Chips & Chicken with drink" 
+                  data-price="65" 
+                  data-image="images/fastfood1.jpg"
+                  data-delivery-type="fast-food"
+                  data-delivery-tier="[7,9,12,15,18,22,26,30,35,40]">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card" data-category="fast-food">
+        <img src="images/fastfood2.jpg" alt="Beef Burger Meal" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Beef Burger Meal (with fries & drink)</div>
+          <div class="product-price">ZMW 55</div>
+          <button class="add-to-cart" 
+                  data-id="fast2" 
+                  data-name="Beef Burger Meal" 
+                  data-price="55" 
+                  data-image="images/fastfood2.jpg"
+                  data-delivery-type="fast-food"
+                  data-delivery-tier="[7,9,12,15,18,22,26,30,35,40]">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card" data-category="fast-food">
+        <img src="images/fastfood3.jpg" alt="Chicken Pizza Slice" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Chicken Pizza Slice</div>
+          <div class="product-price">ZMW 30</div>
+          <button class="add-to-cart" 
+                  data-id="fast3" 
+                  data-name="Chicken Pizza Slice" 
+                  data-price="30" 
+                  data-image="images/fastfood3.jpg"
+                  data-delivery-type="fast-food"
+                  data-delivery-tier="[7,9,12,15,18,22,26,30,35,40]">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card" data-category="fast-food">
+        <img src="images/fastfood4.jpg" alt="Sausage Roll" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Sausage Roll</div>
+          <div class="product-price">ZMW 15</div>
+          <button class="add-to-cart" 
+                  data-id="fast4" 
+                  data-name="Sausage Roll" 
+                  data-price="15" 
+                  data-image="images/fastfood4.jpg"
+                  data-delivery-type="fast-food"
+                  data-delivery-tier="[7,9,12,15,18,22,26,30,35,40]">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card" data-category="fast-food">
+        <img src="images/fastfood5.jpg" alt="Samosa (3 pcs)" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Samosa (3 pcs)</div>
+          <div class="product-price">ZMW 18</div>
+          <button class="add-to-cart" 
+                  data-id="fast5" 
+                  data-name="Samosa (3 pcs)" 
+                  data-price="18" 
+                  data-image="images/fastfood5.jpg"
+                  data-delivery-type="fast-food"
+                  data-delivery-tier="[7,9,12,15,18,22,26,30,35,40]">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card" data-category="fast-food">
+        <img src="images/fastfood6.jpg" alt="Fried Chicken (2 pcs)" class="product-image" />
+        <div class="product-info">
+          <div class="product-name">Fried Chicken (2 pcs)</div>
+          <div class="product-price">ZMW 45</div>
+          <button class="add-to-cart" 
+                  data-id="fast6" 
+                  data-name="Fried Chicken (2 pcs)" 
+                  data-price="45" 
+                  data-image="images/fastfood6.jpg"
+                  data-delivery-type="fast-food"
+                  data-delivery-tier="[7,9,12,15,18,22,26,30,35,40]">Add to Cart</button>
+        </div>
+      </div>
+      <!-- ===== END FAST FOOD ===== -->
+    </div>
+  </div>
 
   <!-- Cart sidebar -->
   <div class="cart-overlay"></div>
@@ -5125,7 +5210,7 @@
       <h2>Your Cart</h2>
       <button class="close-cart">✖</button>
     </div>
-    <div class="delivery-fee">Dont Forget To Send Hostel details or live location if you stay at a Boarding House.50% off Delivery Fee On single-product orders.  </div>
+    <div class="delivery-fee">Don't Forget To Send Hostel details or live location if you stay at a Boarding House.</div>
     <div class="cart-items"></div>
     <div class="cart-total">
       <div class="total-amount">
@@ -5173,23 +5258,25 @@
       </div>
       <div class="campus-options">
         <button class="campus-option" data-campus="main">UNZA Main Campus</button>
-        <button class="campus-option" data-campus="ridgeway"> UNZA Ridgeway Campus</button>
+        <button class="campus-option" data-campus="ridgeway">UNZA Ridgeway Campus</button>
         <button class="campus-option" data-campus="other">Other Universities</button>
       </div>
     </div>
   </div>
 
   <script>
-    // ====== DELIVERY SYSTEM CONSTANTS ======
+    // ====== DELIVERY SYSTEM CONSTANTS (updated with new types) ======
     const DELIVERY_TIERS = {
-      'campus-store': [20,],
+      'campus-store': [20],
       'heavy-grocery': [25,26,28,29,31,32,34,35,37,38,40],
-      'regular-grocery': [12,15,18,19,20,21,22,23,24,25,27,28,30,31,33,34,36,37,39,41,42,44,45,],
-      'noodles': [3,4,5,6,7,8,9,10,11,12, 13,14],
+      'regular-grocery': [12,15,18,19,20,21,22,23,24,25,27,28,30,31,33,34,36,37,39,41,42,44,45],
+      'noodles': [3,4,5,6,7,8,9,10,11,12,13,14],
       'mojo': [3,4,5,6,7,8,9,10,10,11,12,13,14,15,16],
-      'expensive-alcohol': [25,26,28,30,33,34,],
-      'regular-beverage': [ 20,24,25,28,30,]
-    
+      'expensive-alcohol': [25,26,28,30,33,34],
+      'regular-beverage': [18,20,24,25,28,30],
+      'chocoloco': [2,3,4,5,6,7,8,9,10,11],        // new for Chocoloco
+      'low-price': [10,11],         // for products < 35 ZMW
+      'fast-food': [18,22,26,30,35,40]     // new fast food tier
     };
 
     const CAMPUS_CAPS = {
@@ -5201,402 +5288,274 @@
     // ====== DELIVERY CALCULATOR ======
     function calculateDeliveryFee(cart, campus) {
       let totalDeliveryFee = 0;
-      let feeBreakdown = [];
-      
-      // Group items by delivery type
       const deliveryGroups = {};
       
       cart.forEach(item => {
         const type = item.deliveryType;
         const quantity = item.quantity;
-        
-        if (!deliveryGroups[type]) {
-          deliveryGroups[type] = 0;
-        }
+        if (!deliveryGroups[type]) deliveryGroups[type] = 0;
         deliveryGroups[type] += quantity;
       });
       
-      // Calculate fee for each group
       Object.entries(deliveryGroups).forEach(([type, quantity]) => {
         const tier = DELIVERY_TIERS[type];
         if (!tier) return;
-        
-        // Get the fee based on quantity (0-indexed array, so quantity-1)
-        let fee = 0;
-        if (quantity <= tier.length) {
-          fee = tier[quantity - 1];
-        } else {
-          // If more items than tier array, use the last (maximum) value
-          fee = tier[tier.length - 1];
-        }
-        
+        let fee = (quantity <= tier.length) ? tier[quantity - 1] : tier[tier.length - 1];
         totalDeliveryFee += fee;
-        feeBreakdown.push({
-          type: type,
-          quantity: quantity,
-          fee: fee
-        });
       });
       
-      // Apply campus cap
       const cap = CAMPUS_CAPS[campus] || 55;
-      if (totalDeliveryFee > cap) {
-        totalDeliveryFee = cap;
-      }
-      
-      return {
-        total: totalDeliveryFee,
-        breakdown: feeBreakdown
-      };
+      if (totalDeliveryFee > cap) totalDeliveryFee = cap;
+      return { total: totalDeliveryFee };
     }
 
-    // ====== ORIGINAL CODE WITH DELIVERY SYSTEM INTEGRATION ======
-    // Theme Toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeButton(savedTheme);
+    // ====== ORIGINAL CODE INTEGRATION ======
+    let cart = [];
+    let selectedCampus = 'main';
 
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateThemeButton(newTheme);
+    // Helper to update cart display
+    function updateCart() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.querySelector('.cart-count').textContent = totalItems;
+
+      const cartItemsContainer = document.querySelector('.cart-items');
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
+        document.querySelector('.subtotal-price').textContent = 'ZMW 0.00';
+        document.querySelector('.delivery-price').textContent = 'ZMW 0.00';
+        document.querySelector('.total-price').textContent = 'ZMW 0.00';
+        return;
+      }
+
+      let cartHTML = '';
+      let subtotal = 0;
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+        cartHTML += `
+          <div class="cart-item" data-id="${item.id}">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+            <div class="cart-item-details">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">ZMW ${item.price.toFixed(2)}</div>
+              <div class="quantity-control">
+                <button class="quantity-btn minus">-</button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="quantity-btn plus">+</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      cartItemsContainer.innerHTML = cartHTML;
+      document.querySelector('.subtotal-price').textContent = `ZMW ${subtotal.toFixed(2)}`;
+      const delivery = calculateDeliveryFee(cart, selectedCampus);
+      document.querySelector('.delivery-price').textContent = `ZMW ${delivery.total.toFixed(2)}`;
+      document.querySelector('.total-price').textContent = `ZMW ${(subtotal + delivery.total).toFixed(2)}`;
+
+      document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.target.closest('.cart-item').getAttribute('data-id');
+          updateQuantity(id, -1);
+        });
+      });
+      document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.target.closest('.cart-item').getAttribute('data-id');
+          updateQuantity(id, 1);
+        });
+      });
+    }
+
+    function updateQuantity(itemId, change) {
+      const index = cart.findIndex(item => item.id === itemId);
+      if (index !== -1) {
+        cart[index].quantity += change;
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
+        updateCart();
+      }
+    }
+
+    // Add to cart event delegation
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-to-cart')) {
+        const btn = e.target;
+        const id = btn.getAttribute('data-id');
+        const name = btn.getAttribute('data-name');
+        const price = parseFloat(btn.getAttribute('data-price'));
+        const image = btn.getAttribute('data-image');
+        const deliveryType = btn.getAttribute('data-delivery-type');
+        const existing = cart.find(item => item.id === id);
+        if (existing) existing.quantity += 1;
+        else cart.push({ id, name, price, image, quantity: 1, deliveryType });
+        updateCart();
+      }
     });
 
-    function updateThemeButton(theme) {
-      themeToggle.textContent = theme === 'dark' ? '🌙' : '🌞';
-    }
-
-    // DOM Elements
+    // Cart UI
     const cartIcon = document.querySelector('.cart-icon');
-    const cartCount = document.querySelector('.cart-count');
     const cartOverlay = document.querySelector('.cart-overlay');
     const cartSidebar = document.querySelector('.cart-sidebar');
     const closeCart = document.querySelector('.close-cart');
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-    const cartItemsContainer = document.querySelector('.cart-items');
-    const subtotalPriceElement = document.querySelector('.subtotal-price');
-    const deliveryPriceElement = document.querySelector('.delivery-price');
-    const totalPriceElement = document.querySelector('.total-price');
+    cartIcon.addEventListener('click', () => { cartOverlay.style.display = 'block'; cartSidebar.classList.add('active'); });
+    closeCart.addEventListener('click', () => { cartSidebar.classList.remove('active'); cartOverlay.style.display = 'none'; });
+    cartOverlay.addEventListener('click', () => { cartSidebar.classList.remove('active'); cartOverlay.style.display = 'none'; });
+
+    // WhatsApp checkout
     const checkoutBtn = document.querySelector('.checkout-btn');
-    const searchInput = document.getElementById('searchInput');
+    const campusOverlayEl = document.getElementById('campusOverlay');
+    const campusOptions = document.querySelectorAll('.campus-option');
+    const closeCampus = document.querySelector('.close-campus');
+
+    checkoutBtn.addEventListener('click', () => {
+      if (cart.length === 0) { alert('Your cart is empty!'); return; }
+      campusOverlayEl.style.display = 'flex';
+    });
+
+    campusOptions.forEach(opt => {
+      opt.addEventListener('click', () => {
+        selectedCampus = opt.getAttribute('data-campus');
+        sendWhatsAppOrder(selectedCampus);
+        campusOverlayEl.style.display = 'none';
+      });
+    });
+    closeCampus.addEventListener('click', () => campusOverlayEl.style.display = 'none');
+    campusOverlayEl.addEventListener('click', (e) => { if (e.target === campusOverlayEl) campusOverlayEl.style.display = 'none'; });
+
+    function sendWhatsAppOrder(campus) {
+      let message = `ORDER FROM: ${campus === 'main' ? 'Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : 'Other Universities'}\n\nORDER ITEMS:\n`;
+      let subtotal = 0, i = 1;
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+        message += `${i}. ${item.name} ×${item.quantity} = K${itemTotal.toFixed(2)}\n`;
+        i++;
+      });
+      const delivery = calculateDeliveryFee(cart, campus);
+      message += `\nSUBTOTAL: K${subtotal.toFixed(2)}\nDELIVERY FEE: K${delivery.total.toFixed(2)}\nTOTAL TO PAY: K${(subtotal + delivery.total).toFixed(2)}\n\nDELIVERY ADDRESS: [Please provide]\n\nPlease confirm my order. Thank you! ▲`;
+      window.open(`https://wa.me/${campus === 'main' ? '260571049511' : campus === 'ridgeway' ? '260571723719' : '260766612581'}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // Suggestion box
     const suggestionBtn = document.querySelector('.suggestion-btn');
     const suggestionOverlay = document.getElementById('suggestionOverlay');
     const closeSuggestion = document.querySelector('.close-suggestion');
     const sendSuggestionBtn = document.getElementById('sendSuggestion');
     const suggestionText = document.getElementById('suggestionText');
-    const campusOverlay = document.getElementById('campusOverlay');
-    const closeCampus = document.querySelector('.close-campus');
-    const campusOptions = document.querySelectorAll('.campus-option');
-    const categoryTabs = document.querySelectorAll('.category-tab');
-
-    // WhatsApp numbers
-    const campusNumbers = {
-      main: "260571049511", 
-      ridgeway: "260571723719 ",
-      other: "260766612581"
-    };
-
-    // Cart data
-    let cart = [];
-    let selectedCampus = 'main'; // Default campus
-
-    // Toggle cart
-    cartIcon.addEventListener('click', () => {
-      cartOverlay.style.display = 'block';
-      cartSidebar.classList.add('active');
-    });
-
-    closeCart.addEventListener('click', () => {
-      cartSidebar.classList.remove('active');
-      cartOverlay.style.display = 'none';
-    });
-
-    cartOverlay.addEventListener('click', () => {
-      cartSidebar.classList.remove('active');
-      cartOverlay.style.display = 'none';
-    });
-
-    // Add to cart
-    addToCartButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const id = button.getAttribute('data-id');
-        const name = button.getAttribute('data-name');
-        const price = parseFloat(button.getAttribute('data-price'));
-        const image = button.getAttribute('data-image');
-        const deliveryType = button.getAttribute('data-delivery-type');
-        const deliveryTier = JSON.parse(button.getAttribute('data-delivery-tier'));
-
-        const existingItem = cart.find(item => item.id === id);
-        if (existingItem) {
-          existingItem.quantity += 1;
-        } else {
-          cart.push({ 
-            id, 
-            name, 
-            price, 
-            image, 
-            quantity: 1,
-            deliveryType: deliveryType,
-            deliveryTier: deliveryTier
-          });
-        }
-        updateCart();
-      });
-    });
-
-    // Update cart
-    function updateCart() {
-      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      cartCount.textContent = totalItems;
-
-      if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
-        subtotalPriceElement.textContent = 'ZMW 0.00';
-        deliveryPriceElement.textContent = 'ZMW 0.00';
-        totalPriceElement.textContent = 'ZMW 0.00';
-      } else {
-        let cartHTML = '';
-        let subtotal = 0;
-
-        cart.forEach(item => {
-          const itemTotal = item.price * item.quantity;
-          subtotal += itemTotal;
-          cartHTML += `
-            <div class="cart-item" data-id="${item.id}">
-              <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-              <div class="cart-item-details">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">ZMW ${item.price.toFixed(2)}</div>
-                <div class="quantity-control">
-                  <button class="quantity-btn minus">-</button>
-                  <span class="quantity">${item.quantity}</span>
-                  <button class="quantity-btn plus">+</button>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-
-        cartItemsContainer.innerHTML = cartHTML;
-        subtotalPriceElement.textContent = `ZMW ${subtotal.toFixed(2)}`;
-        
-        // Calculate delivery fee
-        const delivery = calculateDeliveryFee(cart, selectedCampus);
-        deliveryPriceElement.textContent = `ZMW ${delivery.total.toFixed(2)}`;
-        
-        // Calculate total
-        const total = subtotal + delivery.total;
-        totalPriceElement.textContent = `ZMW ${total.toFixed(2)}`;
-
-        document.querySelectorAll('.quantity-btn.minus').forEach(button => {
-          button.addEventListener('click', (e) => {
-            const itemId = e.target.closest('.cart-item').getAttribute('data-id');
-            updateQuantity(itemId, -1);
-          });
-        });
-
-        document.querySelectorAll('.quantity-btn.plus').forEach(button => {
-          button.addEventListener('click', (e) => {
-            const itemId = e.target.closest('.cart-item').getAttribute('data-id');
-            updateQuantity(itemId, 1);
-          });
-        });
-      }
-    }
-
-    // Update quantity
-    function updateQuantity(itemId, change) {
-      const itemIndex = cart.findIndex(item => item.id === itemId);
-      if (itemIndex !== -1) {
-        cart[itemIndex].quantity += change;
-        if (cart[itemIndex].quantity <= 0) {
-          cart.splice(itemIndex, 1);
-        }
-        updateCart();
-      }
-    }
-
-    // WhatsApp checkout
-    checkoutBtn.addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-      }
-      campusOverlay.style.display = 'flex';
-    });
-
-    // Campus selection
-    campusOptions.forEach(option => {
-      option.addEventListener('click', () => {
-        selectedCampus = option.getAttribute('data-campus');
-        sendWhatsAppOrder(selectedCampus);
-        campusOverlay.style.display = 'none';
-      });
-    });
-
-    closeCampus.addEventListener('click', () => {
-      campusOverlay.style.display = 'none';
-    });
-
-    campusOverlay.addEventListener('click', (e) => {
-      if (e.target === campusOverlay) {
-        campusOverlay.style.display = 'none';
-      }
-    });
-
-    function sendWhatsAppOrder(campus) {
-      let message = `ORDER FROM: ${campus === 'main' ? 'Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : 'Other Universities'}\n\n`;
-      message += `ORDER ITEMS:\n`;
-      
-      let subtotal = 0;
-      let itemNumber = 1;
-      
-      cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        subtotal += itemTotal;
-        message += `${itemNumber}. ${item.name} ×${item.quantity} = K${itemTotal.toFixed(2)}\n`;
-        itemNumber++;
-      });
-      
-      // Calculate delivery fee
-      const delivery = calculateDeliveryFee(cart, campus);
-      
-      message += `\nSUBTOTAL: K${subtotal.toFixed(2)}\n`;
-      message += `DELIVERY FEE: K${delivery.total.toFixed(2)}\n`;
-      message += `TOTAL TO PAY: K${(subtotal + delivery.total).toFixed(2)}\n\n`;
-      message += `DELIVERY ADDRESS: [Please provide]\n\n`;
-      message += `Please confirm my order. Thank you! ▲`;
-
-      const encodedMessage = encodeURIComponent(message);
-      const whatsappNumber = campusNumbers[campus];
-      window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-    }
-
-    // Suggestion Box
-    suggestionBtn.addEventListener('click', () => {
-      suggestionOverlay.style.display = 'flex';
-    });
-
-    closeSuggestion.addEventListener('click', () => {
+    suggestionBtn.addEventListener('click', () => suggestionOverlay.style.display = 'flex');
+    closeSuggestion.addEventListener('click', () => { suggestionOverlay.style.display = 'none'; suggestionText.value = ''; });
+    sendSuggestionBtn.addEventListener('click', () => {
+      const suggestion = suggestionText.value.trim();
+      if (!suggestion) { alert('Please enter a suggestion.'); return; }
+      window.open(`https://wa.me/260766612581?text=${encodeURIComponent('New Product Suggestion:\n\n' + suggestion)}`, '_blank');
       suggestionOverlay.style.display = 'none';
       suggestionText.value = '';
     });
+    suggestionOverlay.addEventListener('click', (e) => { if (e.target === suggestionOverlay) suggestionOverlay.style.display = 'none'; });
 
-    sendSuggestionBtn.addEventListener('click', () => {
-      const suggestion = suggestionText.value.trim();
-      if (suggestion) {
-        const whatsappNumber = campusNumbers.other;
-        const message = `New Product Suggestion:\n\n${suggestion}`;
-        const encodedMessage = encodeURIComponent(message);
-        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-        suggestionOverlay.style.display = 'none';
-        suggestionText.value = '';
-        alert('Thank you for your suggestion! We will review it soon.');
-      } else {
-        alert('Please enter a product suggestion before sending.');
-      }
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? '🌙' : '🌞';
+    themeToggle.addEventListener('click', () => {
+      const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      themeToggle.textContent = newTheme === 'dark' ? '🌙' : '🌞';
     });
 
-    suggestionOverlay.addEventListener('click', (e) => {
-      if (e.target === suggestionOverlay) {
-        suggestionOverlay.style.display = 'none';
-        suggestionText.value = '';
-      }
-    });
+    // Category and search functionality
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const searchInput = document.getElementById('searchInput');
+    const allProducts = document.querySelectorAll('.product-card');
 
-    // ====== CATEGORY FUNCTIONALITY ======
+    function filterByCategory(activeCategory) {
+      allProducts.forEach(product => {
+        const productCat = product.getAttribute('data-category');
+        if (activeCategory === 'all') {
+          product.style.display = 'block';
+        } else {
+          product.style.display = (productCat === activeCategory) ? 'block' : 'none';
+        }
+      });
+    }
+
+    function filterBySearch(term) {
+      const activeTab = document.querySelector('.category-tab.active');
+      const activeCategory = activeTab ? activeTab.getAttribute('data-category') : 'all';
+      allProducts.forEach(product => {
+        const productCat = product.getAttribute('data-category');
+        const name = product.querySelector('.product-name').textContent.toLowerCase();
+        let categoryMatch = (activeCategory === 'all') || (productCat === activeCategory);
+        let searchMatch = name.includes(term);
+        product.style.display = (categoryMatch && searchMatch) ? 'block' : 'none';
+      });
+    }
+
     categoryTabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        // Update active tab
         categoryTabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
-        const selectedCategory = tab.getAttribute('data-category');
-
+        const category = tab.getAttribute('data-category');
+        filterByCategory(category);
         // Update search placeholder
-        searchInput.placeholder = `Search ${selectedCategory}...`;
-
-        // Get all products
-        const allProducts = document.querySelectorAll('.product-card');
-
-        // Show/hide products based on category
-        allProducts.forEach(product => {
-          const productCategory = product.getAttribute('data-category');
-
-          if (selectedCategory === 'groceries') {
-            product.style.display = productCategory === 'groceries' ? 'block' : 'none';
-          } else if (selectedCategory === 'beverages') {
-            product.style.display = productCategory === 'beverages' ? 'block' : 'none';
-          } else if (selectedCategory === 'cosmetics') {
-            product.style.display = productCategory === 'cosmetics' ? 'block' : 'none';
-          } else if (selectedCategory === 'campus-store') {
-            product.style.display = productCategory === 'campus-store' ? 'block' : 'none';
-          }
-        });
-
-        // Apply search filter if there's a search term
-        if (searchInput.value.trim() !== '') {
-          const searchTerm = searchInput.value.toLowerCase();
-          const visibleProducts = document.querySelectorAll('.product-card[style="display: block"]');
-
-          visibleProducts.forEach(product => {
-            const name = product.querySelector('.product-name').textContent.toLowerCase();
-            product.style.display = name.includes(searchTerm) ? 'block' : 'none';
-          });
-        }
+        if (category === 'all') searchInput.placeholder = 'Search on Campus Cart...';
+        else searchInput.placeholder = `Search ${category.charAt(0).toUpperCase() + category.slice(1)}...`;
+        // Re-apply search term if any
+        if (searchInput.value.trim() !== '') filterBySearch(searchInput.value.toLowerCase());
       });
     });
 
-    // Search functionality
     searchInput.addEventListener('input', () => {
-      const searchTerm = searchInput.value.toLowerCase();
-      const activeTab = document.querySelector('.category-tab.active');
-      const selectedCategory = activeTab ? activeTab.getAttribute('data-category') : 'groceries';
-
-      const allProducts = document.querySelectorAll('.product-card');
-
-      allProducts.forEach(product => {
-        const productCategory = product.getAttribute('data-category');
-        const name = product.querySelector('.product-name').textContent.toLowerCase();
-
-        // First check if product belongs to current category
-        if (productCategory === selectedCategory) {
-          // Then check search term
-          product.style.display = name.includes(searchTerm) ? 'block' : 'none';
-        } else {
-          product.style.display = 'none';
-        }
-      });
+      const term = searchInput.value.toLowerCase();
+      filterBySearch(term);
     });
 
-    // Service Worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => {
-            console.log('✅ Service Worker Registered');
-            reg.addEventListener('updatefound', () => {
-              const newWorker = reg.installing;
-              newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  if (confirm("🆕 A new version is available. Update now?")) {
-                    window.location.reload();
-                  }
-                }
-              });
-            });
-          });
-      });
+   // Auto-assign delivery types for products under ZMW 35
+function assignLowPriceDelivery() {
+  // Special types that should keep their own delivery fee structure
+  const specialTypes = [
+    'noodles', 
+    'mojo', 
+    'chocoloco', 
+    'fast-food', 
+    'campus-store', 
+    'heavy-grocery', 
+    'expensive-alcohol',
+    'low-price'  // already set
+  ];
+  
+  document.querySelectorAll('.product-card .add-to-cart').forEach(btn => {
+    const price = parseFloat(btn.getAttribute('data-price'));
+    const currentType = btn.getAttribute('data-delivery-type');
+    
+    // If product is under 35 ZMW
+    if (price < 35) {
+      // Check if it has a special type that should be kept
+      const hasSpecialType = specialTypes.includes(currentType);
+      
+      if (!hasSpecialType) {
+        // Assign low-price delivery type
+        btn.setAttribute('data-delivery-type', 'low-price');
+        console.log(`Assigned low-price to: ${btn.getAttribute('data-name')} (K${price})`);
+      } else {
+        console.log(`Keeping special type ${currentType} for: ${btn.getAttribute('data-name')} (K${price})`);
+      }
     }
+  });
+  
+  // Special handling for Chocoloco (id 27.446) – force to chocoloco type
+  const chocolocoBtn = document.querySelector('.add-to-cart[data-id="27.446"]');
+  if (chocolocoBtn) {
+    chocolocoBtn.setAttribute('data-delivery-type', 'chocoloco');
+    console.log('Chocoloco assigned special chocoloco delivery type');
+  }
+}
+assignLowPriceDelivery();
+
+    // Initial load: show all products
+    filterByCategory('all');
   </script>
-  </body>
-  </html>
-            🇿🇲
-     
-    }
-  </script>
-  </body>
-  </html>
+</body>
+</html>
