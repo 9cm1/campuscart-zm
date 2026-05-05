@@ -5613,7 +5613,7 @@
       });
       const delivery = calculateDeliveryFee(cart, campus);
       message += `\nSUBTOTAL: K${subtotal.toFixed(2)}\nDELIVERY FEE: K${delivery.total.toFixed(2)}\nTOTAL TO PAY: K${(subtotal + delivery.total).toFixed(2)}\n\nDELIVERY ADDRESS: [Please provide]\n\nPlease confirm my order. Thank you! ▲`;
-      window.open(`https://wa.me/${campus === 'main' ? '260571049511' : campus === 'ridgeway' ? '260571723719' : '260766612581'}?text=${encodeURIComponent(message)}`, '_blank');
+      window.open(`https://wa.me/${campus === 'main' ? '260571049511' : campus === 'ridgeway' ? '260571049511' : '260766612581'}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
     // Suggestion box
