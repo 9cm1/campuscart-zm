@@ -5562,20 +5562,36 @@
     }
 
     // Add to cart event delegation
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('add-to-cart')) {
-        const btn = e.target;
-        const id = btn.getAttribute('data-id');
-        const name = btn.getAttribute('data-name');
-        const price = parseFloat(btn.getAttribute('data-price'));
-        const image = btn.getAttribute('data-image');
-        const deliveryType = btn.getAttribute('data-delivery-type');
-        const existing = cart.find(item => item.id === id);
-        if (existing) existing.quantity += 1;
-        else cart.push({ id, name, price, image, quantity: 1, deliveryType });
-        updateCart();
-      }
-    });
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('add-to-cart')) {
+    const btn = e.target;
+    const id = btn.getAttribute('data-id');
+    const name = btn.getAttribute('data-name');
+    const price = parseFloat(btn.getAttribute('data-price'));
+    const image = btn.getAttribute('data-image');
+    const deliveryType = btn.getAttribute('data-delivery-type');
+    const category = btn.closest('.product-card')?.getAttribute('data-category') || 'unknown';
+    
+    // ====== TRACK IN GOOGLE ANALYTICS ======
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'add_to_cart', {
+        'items': [{
+          'item_id': id,
+          'item_name': name,
+          'price': price,
+          'item_category': category,
+          'quantity': 1
+        }]
+      });
+      console.log(`📊 Tracked: ${name} added to cart (${category})`);
+    }
+    
+    const existing = cart.find(item => item.id === id);
+    if (existing) existing.quantity += 1;
+    else cart.push({ id, name, price, image, quantity: 1, deliveryType });
+    updateCart();
+  }
+});
 
     // Cart UI
     const cartIcon = document.querySelector('.cart-icon');
@@ -5681,6 +5697,25 @@ function sendWhatsAppOrder(campus) {
         deliveryFee: delivery.total,
         total: total
     };
+
+// ====== TRACK PURCHASE IN GOOGLE ANALYTICS ======
+    if (typeof gtag !== 'undefined') {
+        const items = cart.map(item => ({
+            'item_id': item.id,
+            'item_name': item.name,
+            'price': item.price,
+            'quantity': item.quantity
+        }));
+        
+        gtag('event', 'purchase', {
+            'transaction_id': orderId,
+            'value': total,
+            'currency': 'ZMW',
+            'items': items
+        });
+        console.log(`📊 Tracked Purchase: ${orderId} - K${total.toFixed(2)}`);
+    }
+
     
     // Send to Google Sheets - UPDATED URL
     fetch('https://script.google.com/macros/s/AKfycbyQcTgUVc0QZeh8rIACnbMHdLS9M9CHXZwEQi4U7Z5s-SGt4lo4LjuNF_4ae1ObcjYC-g/exec', {
