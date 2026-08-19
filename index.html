@@ -5511,7 +5511,7 @@ campusOverlayEl.addEventListener('click', (e) => {
   if (e.target === campusOverlayEl) campusOverlayEl.style.display = 'none'; 
 });
 
- // ====== UPDATED sendWhatsAppOrder FUNCTION ======
+// ====== UPDATED sendWhatsAppOrder FUNCTION ======
 function sendWhatsAppOrder(campus) {
     if (cart.length === 0) {
         alert('Your cart is empty!');
@@ -5520,11 +5520,12 @@ function sendWhatsAppOrder(campus) {
     
     const orderId = generateOrderId();
     
-    let message = `ORDER #${orderId}\n`;
-    message += `Campus: ${campus === 'main' ? 'UNZA Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : campus === 'lbtc' ? 'LBTC' : campus === 'nippa' ? 'NIPPA' : campus === 'cbu' ? 'CBU' : campus === 'evelyn hone college' ? 'Evelyn Hone College' : 'Lusaka Central'}\n`;
-    message += `Time: ${new Date().toLocaleString()}\n\n`;
-    message += `ORDER ITEMS:\n`;
-    message += `----------------------------------------\n`;
+    // ----- MESSAGE FOR CUSTOMER CONFIRMATION (goes to campus number) -----
+    let customerMessage = `ORDER #${orderId}\n`;
+    customerMessage += `Campus: ${campus === 'main' ? 'UNZA Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : campus === 'lbtc' ? 'LBTC' : campus === 'nippa' ? 'NIPPA' : campus === 'cbu' ? 'CBU' : campus === 'evelyn hone college' ? 'Evelyn Hone College' : 'Lusaka Central'}\n`;
+    customerMessage += `Time: ${new Date().toLocaleString()}\n\n`;
+    customerMessage += `ORDER ITEMS:\n`;
+    customerMessage += `----------------------------------------\n`;
     
     let subtotal = 0;
     let itemDescriptions = [];
@@ -5533,34 +5534,60 @@ function sendWhatsAppOrder(campus) {
         const itemTotal = item.price * item.quantity;
         subtotal += itemTotal;
         itemDescriptions.push(`${item.name} x${item.quantity}`);
-        message += `${index + 1}. ${item.name}\n`;
-        message += `   ${item.quantity} x K${item.price.toFixed(2)} = K${itemTotal.toFixed(2)}\n`;
+        customerMessage += `${index + 1}. ${item.name}\n`;
+        customerMessage += `   ${item.quantity} x K${item.price.toFixed(2)} = K${itemTotal.toFixed(2)}\n`;
     });
     
     const delivery = calculateDeliveryFee(cart, campus);
     const total = subtotal + delivery.total;
     
-    message += `----------------------------------------\n`;
-    message += `SUBTOTAL: K${subtotal.toFixed(2)}\n`;
-    message += `DELIVERY FEE: K${delivery.total.toFixed(2)}\n`;
-    message += `TOTAL TO PAY: K${total.toFixed(2)}\n\n`;
-    message += `DELIVERY ADDRESS: [Please provide your location]\n`;
-    message += `PHONE NUMBER: [Your phone number]\n\n`;
-    message += `Please confirm my order. Thank you!`;
+    customerMessage += `----------------------------------------\n`;
+    customerMessage += `SUBTOTAL: K${subtotal.toFixed(2)}\n`;
+    customerMessage += `DELIVERY FEE: K${delivery.total.toFixed(2)}\n`;
+    customerMessage += `TOTAL TO PAY: K${total.toFixed(2)}\n\n`;
+    customerMessage += `DELIVERY ADDRESS: [Please provide your location]\n`;
+    customerMessage += `PHONE NUMBER: [Your phone number]\n\n`;
+    customerMessage += `Please confirm my order. Thank you!`;
     
-    // ====== CAMPUS PHONE NUMBERS ======
+    // ----- MESSAGE FOR DELIVERY GROUP (NO CUSTOMER CONTACT) -----
+    let groupMessage = `📦 *NEW ORDER ALERT!* 📦\n\n`;
+    groupMessage += `🆔 Order ID: ${orderId}\n`;
+    groupMessage += `📍 Campus: ${campus === 'main' ? 'UNZA Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : campus === 'lbtc' ? 'LBTC' : campus === 'nippa' ? 'NIPPA' : campus === 'cbu' ? 'CBU' : campus === 'evelyn hone college' ? 'Evelyn Hone College' : 'Lusaka Central'}\n`;
+    groupMessage += `⏰ Time: ${new Date().toLocaleString()}\n\n`;
+    groupMessage += `🛒 *ITEMS:*\n`;
+    groupMessage += `----------------------------------------\n`;
+    
+    cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        groupMessage += `${index + 1}. ${item.name}\n`;
+        groupMessage += `   ${item.quantity} x K${item.price.toFixed(2)} = K${itemTotal.toFixed(2)}\n`;
+    });
+    
+    groupMessage += `----------------------------------------\n`;
+    groupMessage += `💰 SUBTOTAL: K${subtotal.toFixed(2)}\n`;
+    groupMessage += `🚚 DELIVERY FEE: K${delivery.total.toFixed(2)}\n`;
+    groupMessage += `💳 TOTAL: K${total.toFixed(2)}\n\n`;
+    groupMessage += `📍 Delivery Address: [Customer will provide in main chat]\n`;
+    groupMessage += `📱 Customer Contact: [Check main Campus Cart number]\n\n`;
+    groupMessage += `✅ *Order ready for pickup!*`;
+    
+    // ----- CAMPUS PHONE NUMBERS -----
     const campusPhones = {
         'main': '260571049511',
         'ridgeway': '260972064746',
-        'lbtc': '260571049511',           // LBTC - REPLACE
-        'nippa': '260571049511',          // NIPPA - REPLACE
-        'cbu': '260571049511',            // CBU - REPLACE
-        'evelyn hone college': '260571049511', // Evelyn Hone - REPLACE
-        'lusaka central': '260973279101'  // Lusaka Central
+        'lbtc': '260571049511',
+        'nippa': '260571049511',
+        'cbu': '260571049511',
+        'evelyn hone college': '260571049511',
+        'lusaka central': '260973279101'
     };
     
-    const phoneNumber = campusPhones[campus] || '260766612581';
+    const customerPhone = campusPhones[campus] || '260766612581';
     
+    // DELIVERY GROUP LINK (your correct link)
+    const deliveryGroupLink = 'https://chat.whatsapp.com/CbmBKSTSkJo0EYqWwwsmlI';
+    
+    // ----- ORDER DATA FOR GOOGLE SHEETS -----
     const orderData = {
         orderId: orderId,
         timestamp: new Date().toISOString(),
@@ -5571,7 +5598,7 @@ function sendWhatsAppOrder(campus) {
         total: total
     };
 
-// ====== TRACK PURCHASE IN GOOGLE ANALYTICS ======
+    // ----- TRACK PURCHASE IN GOOGLE ANALYTICS -----
     if (typeof gtag !== 'undefined') {
         const items = cart.map(item => ({
             'item_id': item.id,
@@ -5589,11 +5616,10 @@ function sendWhatsAppOrder(campus) {
         console.log(`📊 Tracked Purchase: ${orderId} - K${total.toFixed(2)}`);
     }
 
-    
-    // Send to Google Sheets - UPDATED URL
+    // ----- SEND TO GOOGLE SHEETS -----
     fetch('https://script.google.com/macros/s/AKfycbyQcTgUVc0QZeh8rIACnbMHdLS9M9CHXZwEQi4U7Z5s-SGt4lo4LjuNF_4ae1ObcjYC-g/exec', {
         method: 'POST',
-        mode: 'no-cors',  // This prevents CORS errors
+        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -5601,14 +5627,18 @@ function sendWhatsAppOrder(campus) {
     })
     .then(() => {
         console.log('✅ Order sent to Google Sheets (no-cors mode)');
-        console.log('📊 Check your Google Sheet to confirm!');
     })
     .catch((error) => {
         console.error('❌ Error sending order:', error);
     });
     
+    // ----- SEND TO BOTH WHATSAPP NUMBERS -----
     setTimeout(() => {
-        window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        // 1. Send to customer confirmation number (with customer's message)
+        window.open(`https://wa.me/${customerPhone}?text=${encodeURIComponent(customerMessage)}`, '_blank');
+        
+        // 2. Send to delivery group (with order details ONLY, no customer contact)
+        window.open(`${deliveryGroupLink}?text=${encodeURIComponent(groupMessage)}`, '_blank');
     }, 300);
 }
     // Suggestion box
