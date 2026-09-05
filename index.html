@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#64ffda" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <title>CampusCart</title>
+  <meta name="description" content="Shop groceries, meals, essentials and student businesses with Campus Cart." />
 
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HER81SZ9DM"></script>
@@ -721,41 +722,747 @@
       height: 25px;
       width: auto;
     }
+
+    /* ===== Campus Cart 2026 navigation and experience update ===== */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--light-blue);
+      outline-offset: 3px;
+    }
+
+    .site-chrome {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: var(--navy);
+      box-shadow: var(--shadow);
+      transition: transform 0.24s ease;
+      will-change: transform;
+    }
+
+    .site-chrome.nav-hidden {
+      transform: translateY(calc(-100% - 2px));
+    }
+
+    .main-header {
+      position: static;
+      padding: 7px 14px 6px;
+      box-shadow: none;
+    }
+
+    .header-content {
+      display: block;
+      max-width: 1200px;
+    }
+
+    .logo-row {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 9px;
+      margin: 0;
+    }
+
+    .menu-toggle,
+    .menu-close,
+    .theme-toggle,
+    .cart-icon {
+      border: 0;
+      background: transparent;
+      color: var(--text-light);
+      cursor: pointer;
+    }
+
+    .menu-toggle,
+    .theme-toggle,
+    .cart-icon {
+      min-width: 38px;
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+    }
+
+    .menu-toggle:hover,
+    .theme-toggle:hover,
+    .cart-icon:hover {
+      background: rgba(100, 255, 218, 0.1);
+    }
+
+    .menu-toggle svg {
+      width: 23px;
+      height: 23px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+    }
+
+    .brand-lockup {
+      position: relative;
+      display: inline-block;
+      width: fit-content;
+      padding: 0 0 8px;
+      border: 0;
+      background: transparent;
+      color: var(--light-blue);
+      text-decoration: none;
+      justify-self: start;
+      line-height: 1;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .logo {
+      display: block;
+      color: inherit;
+      font-size: clamp(1.18rem, 5vw, 1.55rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .logo-cart-word {
+      position: relative;
+      display: inline-block;
+    }
+
+    .brand-smile {
+      position: absolute;
+      top: calc(100% - 1px);
+      left: 4%;
+      width: 92%;
+      height: 8px;
+      overflow: visible;
+    }
+
+    .brand-smile path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .theme-toggle {
+      padding: 0;
+      font-size: 1.15rem;
+    }
+
+    .theme-toggle:hover {
+      transform: none;
+    }
+
+    .cart-icon {
+      position: relative;
+      padding: 0;
+    }
+
+    .cart-mark {
+      width: 30px;
+      height: 30px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .cart-count {
+      top: -2px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
+    }
+
+    .search-container {
+      position: relative;
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    .search-bar {
+      min-height: 36px;
+      padding: 8px 39px 8px 14px;
+      border-radius: 18px;
+      font-size: 0.85rem;
+    }
+
+    .search-symbol {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translateY(-50%);
+      color: var(--text-gray);
+      pointer-events: none;
+    }
+
+    .discovery-row {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 14px 7px;
+    }
+
+    .suggestion-container {
+      margin: 0 0 6px;
+    }
+
+    .suggestion-btn {
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+
+    .category-tabs-wrapper {
+      margin: 0;
+      padding: 0 14px 7px;
+      scrollbar-width: none;
+    }
+
+    .category-tabs-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-tabs {
+      gap: 6px;
+      padding: 0;
+    }
+
+    .category-tab {
+      padding: 7px 13px;
+      font-size: 0.85rem;
+      border-radius: 18px;
+    }
+
+    .container {
+      padding: 14px;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      background: rgba(0, 0, 0, 0.58);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .menu-drawer {
+      width: min(86vw, 360px);
+      height: 100%;
+      overflow-y: auto;
+      background: var(--navy);
+      color: var(--text-light);
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      box-shadow: 8px 0 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .menu-overlay.active .menu-drawer {
+      transform: translateX(0);
+    }
+
+    .menu-panel-header {
+      min-height: 132px;
+      padding: 24px 22px 18px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--dark-blue);
+      border-bottom: 1px solid rgba(100, 255, 218, 0.22);
+    }
+
+    .menu-eyebrow {
+      color: var(--text-gray);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .menu-title {
+      margin-top: 5px;
+      color: var(--light-blue);
+      font-size: 1.65rem;
+    }
+
+    .menu-close {
+      align-self: flex-start;
+      width: 40px;
+      height: 40px;
+      font-size: 1.8rem;
+      line-height: 1;
+      border-radius: 50%;
+    }
+
+    .menu-links {
+      padding: 14px 0;
+    }
+
+    .menu-link {
+      width: 100%;
+      min-height: 54px;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border: 0;
+      background: transparent;
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .menu-link:hover {
+      background: rgba(100, 255, 218, 0.1);
+      color: var(--light-blue);
+    }
+
+    .menu-link svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .restaurant-selector {
+      margin-bottom: 18px;
+    }
+
+    .restaurant-selector[hidden],
+    .restaurant-menu-heading[hidden],
+    .no-results[hidden],
+    .team-view[hidden],
+    .install-help[hidden] {
+      display: none !important;
+    }
+
+    .section-heading {
+      margin-bottom: 12px;
+      color: var(--text-light);
+      font-size: clamp(1.25rem, 5vw, 1.65rem);
+    }
+
+    .section-subtitle {
+      margin: -5px 0 15px;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .restaurant-card {
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid rgba(100, 255, 218, 0.22);
+      border-radius: 14px;
+      background: var(--navy);
+      color: var(--text-light);
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      text-align: left;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .restaurant-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--light-blue);
+    }
+
+    .restaurant-card img {
+      width: 100%;
+      height: 150px;
+      display: block;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .restaurant-card span {
+      display: block;
+      padding: 11px 12px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .restaurant-menu-heading {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back-button {
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid var(--light-blue);
+      border-radius: 9px;
+      background: transparent;
+      color: var(--light-blue);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .restaurant-menu-title {
+      font-size: 1.15rem;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      padding: 40px 18px;
+      color: var(--text-gray);
+      text-align: center;
+    }
+
+    .product-card.search-highlight {
+      box-shadow: 0 0 0 2px var(--light-blue), var(--shadow);
+    }
+
+    .team-view {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 18px 14px 30px;
+    }
+
+    .team-intro {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .team-intro-copy p {
+      margin-top: 4px;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .team-card {
+      padding: 25px 18px 21px;
+      border: 1px solid rgba(100, 255, 218, 0.1);
+      border-radius: 18px;
+      background: var(--navy);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .team-photo {
+      width: 142px;
+      height: 142px;
+      border: 4px solid var(--light-blue);
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .team-photo.jethro {
+      object-position: 50% 43%;
+    }
+
+    .team-card h3 {
+      margin-top: 15px;
+      color: var(--text-light);
+      font-size: 1.3rem;
+    }
+
+    .team-role {
+      min-height: 42px;
+      margin-top: 7px;
+      color: var(--light-blue);
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .social-links {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .social-link {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(100, 255, 218, 0.35);
+      border-radius: 50%;
+      color: var(--text-light);
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-2px);
+      background: var(--light-blue);
+      color: var(--dark-blue);
+    }
+
+    .social-link svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .social-link.facebook svg path {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    .install-banner {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      left: 14px;
+      z-index: 1300;
+      max-width: 470px;
+      margin: 0 auto;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      border: 1px solid rgba(100, 255, 218, 0.4);
+      border-radius: 15px;
+      background: var(--navy);
+      color: var(--text-light);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.42);
+      transform: translateY(calc(100% + 30px));
+      opacity: 0;
+      visibility: hidden;
+      transition: transform 0.26s ease, opacity 0.26s ease, visibility 0.26s ease;
+    }
+
+    .install-banner.show {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .install-mini-logo {
+      width: 42px;
+      height: 42px;
+      color: var(--light-blue);
+    }
+
+    .install-copy strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .install-copy p {
+      color: var(--text-gray);
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .install-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .install-action {
+      min-height: 36px;
+      padding: 7px 13px;
+      border: 1px solid var(--light-blue);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--light-blue);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .install-action.primary {
+      background: var(--light-blue);
+      color: var(--dark-blue);
+    }
+
+    .install-help {
+      position: fixed;
+      inset: 0;
+      z-index: 1400;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.68);
+    }
+
+    .install-help-card {
+      width: min(100%, 420px);
+      padding: 20px;
+      border-radius: 16px;
+      background: var(--navy);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .install-help-card h2 {
+      color: var(--light-blue);
+      font-size: 1.2rem;
+    }
+
+    .install-help-card ol {
+      margin: 14px 0 18px 22px;
+      color: var(--text-light);
+      line-height: 1.65;
+    }
+
+    .site-footer {
+      margin-top: 30px;
+      padding: 18px;
+      border-top: 1px solid rgba(100, 255, 218, 0.2);
+      background: var(--navy);
+      text-align: center;
+    }
+
+    [data-theme="light"] .menu-drawer,
+    [data-theme="light"] .team-card,
+    [data-theme="light"] .restaurant-card,
+    [data-theme="light"] .install-banner,
+    [data-theme="light"] .install-help-card {
+      background: var(--navy);
+    }
+
+    @media (min-width: 768px) {
+      .header-content {
+        display: grid;
+        grid-template-columns: auto minmax(280px, 1fr);
+        align-items: center;
+        gap: 18px;
+      }
+
+      .logo-row {
+        min-width: 300px;
+      }
+
+      .search-container {
+        margin: 0;
+      }
+
+      .restaurant-card img {
+        height: 210px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-header,
+      .discovery-row,
+      .category-tabs-wrapper,
+      .container,
+      .team-view {
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+
+      .restaurant-card img {
+        height: 128px;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-card {
+        padding-top: 23px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="main-header">
-    <div class="header-content">
-      <div class="logo-row">
-        <div class="logo">Campus Cart</div>
-        <div class="header-controls">
-          <button class="theme-toggle" id="themeToggle">🌙</button>
-          <div class="cart-icon">
-            🛒 Cart
-            <span class="cart-count">0</span>
+  <!-- Compact navigation: hides while scrolling down and returns on scroll up -->
+  <div class="site-chrome" id="siteChrome">
+    <header class="main-header">
+      <div class="header-content">
+        <div class="logo-row">
+          <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="menuOverlay" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+          </button>
+
+          <button class="brand-lockup" id="shopBrand" type="button" aria-label="Open Campus Cart shop">
+            <span class="logo">Campus <span class="logo-cart-word">Cart<svg class="brand-smile" viewBox="0 0 48 10" aria-hidden="true"><path d="M3 2.5c11 6 29 6 42 0" /></svg></span></span>
+          </button>
+
+          <div class="header-controls">
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Change colour theme">🌙</button>
+            <button class="cart-icon" type="button" aria-label="Open shopping cart">
+              <svg class="cart-mark" viewBox="0 0 36 36" aria-hidden="true">
+                <path d="M6 7h3l2.2 12h15.7l2.2-8.5H11" />
+                <path d="M13.5 24.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                <path d="M29 31c-5.8 3-13.9 3-20 0m1-1-2 1 1.4 2" />
+              </svg>
+              <span class="cart-count">0</span>
+            </button>
           </div>
         </div>
+
+        <div class="search-container">
+          <input type="search" class="search-bar" placeholder="Search on Campus Cart..." id="searchInput" autocomplete="off" aria-label="Search all Campus Cart products" />
+          <svg class="search-symbol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
       </div>
-      <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search on Campus Cart..." id="searchInput" />
+    </header>
+
+    <div class="discovery-row">
+      <div class="suggestion-container">
+        <button class="suggestion-btn" type="button">SUGGEST A PRODUCT</button>
       </div>
     </div>
-  </header>
 
-  <!-- Main content -->
-  <div class="container">
-    <!-- Suggestion Button -->
-    <div class="suggestion-container">
-      <button class="suggestion-btn">SUGGEST A PRODUCT</button>
-    </div>
-
-    <!-- Category Tabs - Horizontal Scrollable, No Borders -->
-    <div class="category-tabs-wrapper">
+    <nav class="category-tabs-wrapper" aria-label="Product categories">
       <div class="category-tabs">
-        <button class="category-tab active" data-category="all">All</button>
-        <button class="category-tab" data-category="groceries">Groceries</button>
+        <button class="category-tab active" type="button" data-category="groceries">Groceries</button>
         <button class="category-tab" data-category="beverages">Beverages</button>
         <button class="category-tab" data-category="cosmetics">Cosmetics</button>
         <button class="category-tab" data-category="fast-food">Fast Food</button>
@@ -765,13 +1472,60 @@
         <button class="category-tab" data-category="phone-accessories">Phone Accessories</button>
         <button class="category-tab" data-category="utilities">Utilities</button>
         <button class="category-tab" data-category="Shoes">Shoes</button>
-      
         <button class="category-tab" data-category="Student-Businesses">Student Businesses</button>
       </div>
+    </nav>
+  </div>
+
+  <!-- Amazon-style side menu -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <aside class="menu-drawer" aria-label="Campus Cart menu">
+      <div class="menu-panel-header">
+        <div>
+          <div class="menu-eyebrow">Browse</div>
+          <div class="menu-title">Campus Cart</div>
+        </div>
+        <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">×</button>
+      </div>
+      <nav class="menu-links" aria-label="Information">
+        <a class="menu-link" href="team.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19v-1.2A4.8 4.8 0 0 1 8.3 13h1.4a4.8 4.8 0 0 1 4.8 4.8V19"/><circle cx="17" cy="9" r="2.3"/><path d="M16 14h.8a3.7 3.7 0 0 1 3.7 3.7V19"/></svg>
+          Meet the Team
+        </a>
+        <a class="menu-link" href="privacy-policy.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h4M9 12h7M9 16h7"/></svg>
+          Privacy Policy
+        </a>
+      </nav>
+    </aside>
+  </div>
+
+  <!-- Main catalogue -->
+  <main class="container" id="catalogView">
+    <section class="restaurant-selector" id="restaurantSelector" hidden>
+      <h1 class="section-heading">Choose a Restaurant</h1>
+      <p class="section-subtitle">Select a restaurant to view its menu.</p>
+      <div class="restaurant-grid">
+        <button class="restaurant-card" type="button" data-restaurant="hungry-lion">
+          <img src="images/restaurant-hungry-lion.jpg" alt="Hungry Lion" />
+          <span>Hungry Lion</span>
+        </button>
+        <button class="restaurant-card" type="button" data-restaurant="9-to-9">
+          <img src="images/restaurant-9-to-9.jpg" alt="9 to 9" />
+          <span>9 to 9</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="restaurant-menu-heading" id="restaurantMenuHeading" hidden>
+      <button class="back-button" id="backToRestaurants" type="button">← Restaurants</button>
+      <h1 class="restaurant-menu-title" id="restaurantMenuTitle"></h1>
     </div>
 
+    <p class="no-results" id="noResults" role="status" aria-live="polite" hidden>No products found. Try a different search.</p>
+
   <!-- ALL PRODUCTS START -->
-<div class="products">
+<div class="products" id="productsGrid">
 
   <!-- ===== GROCERIES ===== -->
   
@@ -4860,7 +5614,7 @@
 <div class="product-card" data-category="Student-Businesses" style="display: none;">
        <img src="images/sb1.jpg" alt="Student Product" class="product-image" />
        <div class="product-info">
-         <div class="product-name"> Robert's Silicone 60W Type CtoC Charging Cable </br>
+         <div class="product-name"> Robert's Silicone 60W Type CtoC Charging Cable <br>
          (ridgeway campus)</div>
          <div class="product-price">ZMW 40</div>
          <button class="add-to-cart" 
@@ -4875,7 +5629,7 @@
 <div class="product-card" data-category="Student-Businesses" style="display: none;">
        <img src="images/sb2.jpg" alt="Student Product" class="product-image" />
        <div class="product-info">
-         <div class="product-name">Robert's USB A To MICRO/TYPE-C S TYPE-C To MICRO/TYPE-C Fast Charging Cable</br>
+         <div class="product-name">Robert's USB A To MICRO/TYPE-C S TYPE-C To MICRO/TYPE-C Fast Charging Cable<br>
          (ridgeway campus)</div>
          <div class="product-price">ZMW 45</div>
          <button class="add-to-cart" 
@@ -4890,7 +5644,7 @@
 <div class="product-card" data-category="Student-Businesses" style="display: none;">
        <img src="images/sb3.jpg" alt="Student Product" class="product-image" />
        <div class="product-info">
-         <div class="product-name"> Robert's 4in1 Daul Type-C+Lighting Interface Ports.27W Lighting + 65W Type-C</br>
+         <div class="product-name"> Robert's 4in1 Daul Type-C+Lighting Interface Ports.27W Lighting + 65W Type-C<br>
          (ridgeway campus)</div>
          <div class="product-price">ZMW 50</div>
          <button class="add-to-cart" 
@@ -4905,7 +5659,7 @@
 <div class="product-card" data-category="Student-Businesses" style="display: none;">
        <img src="images/sb4.jpg" alt="Student Product" class="product-image" />
        <div class="product-info">
-         <div class="product-name"> Chazalicious Foods PRE-MIXED DRY OKRA[Okra,Groundnuts,soda]</br>
+         <div class="product-name"> Chazalicious Foods PRE-MIXED DRY OKRA[Okra,Groundnuts,soda]<br>
          (Main campus )</div>
          <div class="product-price">ZMW 35</div>
          <button class="add-to-cart" 
@@ -5208,7 +5962,7 @@
 <div class="product-card" data-category="Shoes" style="display: none;">
        <img src="images/nike.jpg" alt="Student Product" class="product-image" />
        <div class="product-info">
-         <div class="product-name"> white Nike Airforce </br>
+         <div class="product-name"> white Nike Airforce <br>
           (all sizes)
          </div>
          <div class="product-price">ZMW 400</div>
@@ -5227,7 +5981,7 @@
 <div class="product-card" data-category="Vegetables" style="display: none;">
        <img src="images/okra.jpeg" alt="Student Product" class="product-image" />
        <div class="product-info">
-         <div class="product-name"> Fresh Okra </br>
+         <div class="product-name"> Fresh Okra <br>
           (comes with chilli)
          </div>
          <div class="product-price">ZMW 10</div>
@@ -5248,7 +6002,7 @@
   
 
     </div>
-  </div>
+  </main>
 
   <!-- Cart sidebar -->
   <div class="cart-overlay"></div>
@@ -5443,7 +6197,8 @@ document.addEventListener('click', (e) => {
     const price = parseFloat(btn.getAttribute('data-price'));
     const image = btn.getAttribute('data-image');
     const deliveryType = btn.getAttribute('data-delivery-type');
-    const category = btn.closest('.product-card')?.getAttribute('data-category') || 'unknown';
+    const productCard = btn.closest('.product-card');
+    const category = productCard ? productCard.getAttribute('data-category') : 'unknown';
     
     // ====== TRACK IN GOOGLE ANALYTICS ======
     if (typeof gtag !== 'undefined') {
@@ -5549,43 +6304,9 @@ function sendWhatsAppOrder(campus) {
     customerMessage += `PHONE NUMBER: [Your phone number]\n\n`;
     customerMessage += `Please confirm my order. Thank you!`;
     
-    // ----- MESSAGE FOR DELIVERY GROUP (NO CUSTOMER CONTACT) -----
-    let groupMessage = `📦 *NEW ORDER ALERT!* 📦\n\n`;
-    groupMessage += `🆔 Order ID: ${orderId}\n`;
-    groupMessage += `📍 Campus: ${campus === 'main' ? 'UNZA Main Campus' : campus === 'ridgeway' ? 'Ridgeway Campus' : campus === 'lbtc' ? 'LBTC' : campus === 'nippa' ? 'NIPPA' : campus === 'cbu' ? 'CBU' : campus === 'evelyn hone college' ? 'Evelyn Hone College' : 'Lusaka Central'}\n`;
-    groupMessage += `⏰ Time: ${new Date().toLocaleString()}\n\n`;
-    groupMessage += `🛒 *ITEMS:*\n`;
-    groupMessage += `----------------------------------------\n`;
-    
-    cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
-        groupMessage += `${index + 1}. ${item.name}\n`;
-        groupMessage += `   ${item.quantity} x K${item.price.toFixed(2)} = K${itemTotal.toFixed(2)}\n`;
-    });
-    
-    groupMessage += `----------------------------------------\n`;
-    groupMessage += `💰 SUBTOTAL: K${subtotal.toFixed(2)}\n`;
-    groupMessage += `🚚 DELIVERY FEE: K${delivery.total.toFixed(2)}\n`;
-    groupMessage += `💳 TOTAL: K${total.toFixed(2)}\n\n`;
-    groupMessage += `📍 Delivery Address: [Customer will provide in main chat]\n`;
-    groupMessage += `📱 Customer Contact: [Check main Campus Cart number]\n\n`;
-    groupMessage += `✅ *Order ready for pickup!*`;
-    
-    // ----- CAMPUS PHONE NUMBERS -----
-    const campusPhones = {
-        'main': '260571049511',
-        'ridgeway': '260571049511',
-        'lbtc': '260571049511',
-        'nippa': '260571049511',
-        'cbu': '260571049511',
-        'evelyn hone college': '260571049511',
-        'lusaka central': '260571049511'
-    };
-    
-    const customerPhone = campusPhones[campus] || '260766612581';
-    
-    // DELIVERY GROUP LINK (your correct link)
-    const deliveryGroupLink = 'https://chat.whatsapp.com/CbmBKSTSkJo0EYqWwwsmlI';
+    // Every order goes only to the official Campus Cart WhatsApp Business account.
+    // Founders decide manually if an order needs to be shared with a delivery partner.
+    const customerPhone = '260571049511';
     
     // ----- ORDER DATA FOR GOOGLE SHEETS -----
     const orderData = {
@@ -5620,6 +6341,7 @@ function sendWhatsAppOrder(campus) {
     fetch('https://script.google.com/macros/s/AKfycbyQcTgUVc0QZeh8rIACnbMHdLS9M9CHXZwEQi4U7Z5s-SGt4lo4LjuNF_4ae1ObcjYC-g/exec', {
         method: 'POST',
         mode: 'no-cors',
+        keepalive: true,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -5632,14 +6354,10 @@ function sendWhatsAppOrder(campus) {
         console.error('❌ Error sending order:', error);
     });
     
-    // ----- SEND TO BOTH WHATSAPP NUMBERS -----
+    // Open one destination only: Campus Cart WhatsApp Business.
     setTimeout(() => {
-        // 1. Send to customer confirmation number (with customer's message)
-        window.open(`https://wa.me/${customerPhone}?text=${encodeURIComponent(customerMessage)}`, '_blank');
-        
-        // 2. Send to delivery group (with order details ONLY, no customer contact)
-        window.open(`${deliveryGroupLink}?text=${encodeURIComponent(groupMessage)}`, '_blank');
-    }, 300);
+        window.location.assign(`https://wa.me/${customerPhone}?text=${encodeURIComponent(customerMessage)}`);
+    }, 250);
 }
     // Suggestion box
     const suggestionBtn = document.querySelector('.suggestion-btn');
@@ -5652,7 +6370,7 @@ function sendWhatsAppOrder(campus) {
     sendSuggestionBtn.addEventListener('click', () => {
       const suggestion = suggestionText.value.trim();
       if (!suggestion) { alert('Please enter a suggestion.'); return; }
-      window.open(`https://wa.me/260766612581?text=${encodeURIComponent('New Product Suggestion:\n\n' + suggestion)}`, '_blank');
+      window.open(`https://wa.me/260571049511?text=${encodeURIComponent('New Product Suggestion:\n\n' + suggestion)}`, '_blank');
       suggestionOverlay.style.display = 'none';
       suggestionText.value = '';
     });
@@ -5670,51 +6388,138 @@ function sendWhatsAppOrder(campus) {
       themeToggle.textContent = newTheme === 'dark' ? '🌙' : '🌞';
     });
 
-    // Category and search functionality
+    // ====== GLOBAL PRODUCT SEARCH, CATEGORIES AND RESTAURANTS ======
     const categoryTabs = document.querySelectorAll('.category-tab');
     const searchInput = document.getElementById('searchInput');
     const allProducts = document.querySelectorAll('.product-card');
+    const productsGrid = document.getElementById('productsGrid');
+    const restaurantSelector = document.getElementById('restaurantSelector');
+    const restaurantMenuHeading = document.getElementById('restaurantMenuHeading');
+    const restaurantMenuTitle = document.getElementById('restaurantMenuTitle');
+    const backToRestaurants = document.getElementById('backToRestaurants');
+    const noResults = document.getElementById('noResults');
+    let activeCategory = 'groceries';
+    let activeRestaurant = null;
+    let searchTimer = null;
 
-    function filterByCategory(activeCategory) {
+    // Existing hl products belong to Hungry Lion; existing fast products belong to 9 to 9.
+    allProducts.forEach(product => {
+      if (product.getAttribute('data-category') !== 'fast-food') return;
+      const productButton = product.querySelector('.add-to-cart');
+      const productId = productButton ? productButton.getAttribute('data-id') : '';
+      product.dataset.restaurant = productId.startsWith('hl') ? 'hungry-lion' : '9-to-9';
+    });
+
+    function setActiveTab(category) {
+      categoryTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-category') === category);
+      });
+      const selectedTab = document.querySelector(`.category-tab[data-category="${category}"]`);
+      if (selectedTab) selectedTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    function showRestaurantSelector() {
+      activeRestaurant = null;
+      restaurantSelector.hidden = false;
+      restaurantMenuHeading.hidden = true;
+      productsGrid.style.display = 'none';
+      noResults.hidden = true;
       allProducts.forEach(product => {
-        const productCat = product.getAttribute('data-category');
-        if (activeCategory === 'all') {
-          product.style.display = 'block';
-        } else {
-          product.style.display = (productCat === activeCategory) ? 'block' : 'none';
-        }
+        product.style.display = 'none';
+        product.classList.remove('search-highlight');
       });
     }
 
-    function filterBySearch(term) {
-      const activeTab = document.querySelector('.category-tab.active');
-      const activeCategory = activeTab ? activeTab.getAttribute('data-category') : 'all';
+    function showRestaurantMenu(restaurant) {
+      activeCategory = 'fast-food';
+      activeRestaurant = restaurant;
+      setActiveTab('fast-food');
+      restaurantSelector.hidden = true;
+      restaurantMenuHeading.hidden = false;
+      restaurantMenuTitle.textContent = restaurant === 'hungry-lion' ? 'Hungry Lion Menu' : '9 to 9 Menu';
+      productsGrid.style.display = 'grid';
+      noResults.hidden = true;
       allProducts.forEach(product => {
-        const productCat = product.getAttribute('data-category');
-        const name = product.querySelector('.product-name').textContent.toLowerCase();
-        let categoryMatch = (activeCategory === 'all') || (productCat === activeCategory);
-        let searchMatch = name.includes(term);
-        product.style.display = (categoryMatch && searchMatch) ? 'block' : 'none';
+        const show = product.getAttribute('data-category') === 'fast-food' && product.dataset.restaurant === restaurant;
+        product.style.display = show ? 'block' : 'none';
+        product.classList.remove('search-highlight');
       });
+    }
+
+    function filterByCategory(category) {
+      activeCategory = category;
+      setActiveTab(category);
+      noResults.hidden = true;
+
+      if (category === 'fast-food') {
+        showRestaurantSelector();
+        return;
+      }
+
+      activeRestaurant = null;
+      restaurantSelector.hidden = true;
+      restaurantMenuHeading.hidden = true;
+      productsGrid.style.display = 'grid';
+      allProducts.forEach(product => {
+        const show = product.getAttribute('data-category') === category;
+        product.style.display = show ? 'block' : 'none';
+        product.classList.remove('search-highlight');
+      });
+    }
+
+    function filterBySearch(rawTerm) {
+      const term = rawTerm.trim().toLowerCase();
+      if (!term) {
+        filterByCategory(activeCategory);
+        return;
+      }
+
+      restaurantSelector.hidden = true;
+      restaurantMenuHeading.hidden = true;
+      productsGrid.style.display = 'grid';
+      const matches = [];
+
+      allProducts.forEach(product => {
+        const productName = product.querySelector('.product-name');
+        const productCategory = product.getAttribute('data-category');
+        const name = productName ? productName.textContent.toLowerCase() : '';
+        const category = productCategory ? productCategory.toLowerCase() : '';
+        const restaurant = product.dataset.restaurant ? product.dataset.restaurant.replace(/-/g, ' ') : '';
+        const isMatch = `${name} ${category} ${restaurant}`.includes(term);
+        product.style.display = isMatch ? 'block' : 'none';
+        product.classList.remove('search-highlight');
+        if (isMatch) matches.push(product);
+      });
+
+      noResults.hidden = matches.length !== 0;
+      if (!matches.length) return;
+
+      const firstMatch = matches[0];
+      activeCategory = firstMatch.getAttribute('data-category') || 'groceries';
+      setActiveTab(activeCategory);
+      firstMatch.classList.add('search-highlight');
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => firstMatch.classList.remove('search-highlight'), 1500);
+      }, 280);
     }
 
     categoryTabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        categoryTabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const category = tab.getAttribute('data-category');
-        filterByCategory(category);
-        // Update search placeholder
-        if (category === 'all') searchInput.placeholder = 'Search on Campus Cart...';
-        else searchInput.placeholder = `Search ${category.charAt(0).toUpperCase() + category.slice(1)}...`;
-        // Re-apply search term if any
-        if (searchInput.value.trim() !== '') filterBySearch(searchInput.value.toLowerCase());
+        searchInput.value = '';
+        filterByCategory(tab.getAttribute('data-category'));
       });
     });
 
+    document.querySelectorAll('.restaurant-card').forEach(card => {
+      card.addEventListener('click', () => showRestaurantMenu(card.dataset.restaurant));
+    });
+
+    backToRestaurants.addEventListener('click', showRestaurantSelector);
+
     searchInput.addEventListener('input', () => {
-      const term = searchInput.value.toLowerCase();
-      filterBySearch(term);
+      filterBySearch(searchInput.value);
     });
 
    // Auto-assign delivery types for products under ZMW 35
@@ -5765,18 +6570,193 @@ function assignLowPriceDelivery() {
 }
 assignLowPriceDelivery();
 
-    // Initial load: show all products
-    filterByCategory('all');
+    // Improve catalogue loading without changing any product data.
+    document.querySelectorAll('.product-image').forEach(image => {
+      image.loading = 'lazy';
+      image.decoding = 'async';
+    });
+
+    // ====== SIDE MENU ======
+    const siteChrome = document.getElementById('siteChrome');
+    const menuToggle = document.getElementById('menuToggle');
+    const menuClose = document.getElementById('menuClose');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const shopBrand = document.getElementById('shopBrand');
+
+    function openMenu() {
+      siteChrome.classList.remove('nav-hidden');
+      menuOverlay.classList.add('active');
+      menuOverlay.setAttribute('aria-hidden', 'false');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('menu-open');
+      menuClose.focus();
+    }
+
+    function closeMenu() {
+      menuOverlay.classList.remove('active');
+      menuOverlay.setAttribute('aria-hidden', 'true');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    }
+
+    menuToggle.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', event => {
+      if (event.target === menuOverlay) closeMenu();
+    });
+    shopBrand.addEventListener('click', () => {
+      searchInput.value = '';
+      filterByCategory(activeCategory);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeMenu();
+    });
+
+    // Hide the compact navigation while scrolling down; reveal it on any upward scroll.
+    let previousScrollY = window.scrollY;
+    let scrollFramePending = false;
+    window.addEventListener('scroll', () => {
+      if (scrollFramePending) return;
+      scrollFramePending = true;
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const keepVisible = document.activeElement === searchInput ||
+          menuOverlay.classList.contains('active') ||
+          cartSidebar.classList.contains('active');
+
+        if (keepVisible || currentScrollY < 90 || currentScrollY < previousScrollY) {
+          siteChrome.classList.remove('nav-hidden');
+        } else if (currentScrollY > previousScrollY) {
+          siteChrome.classList.add('nav-hidden');
+        }
+
+        previousScrollY = currentScrollY;
+        scrollFramePending = false;
+      });
+    }, { passive: true });
+
+    searchInput.addEventListener('focus', () => siteChrome.classList.remove('nav-hidden'));
+
+    // Keep the theme control understandable to screen-reader users.
+    function updateThemeLabel(theme) {
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+    updateThemeLabel(savedTheme);
+    themeToggle.addEventListener('click', () => {
+      updateThemeLabel(document.documentElement.getAttribute('data-theme'));
+    });
+
+    // Initial view starts with Groceries; there is intentionally no All category.
+    filterByCategory('groceries');
+    updateCart();
+  </script>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 CampusCart General Dealers. All rights reserved.</p>
+  </footer>
+
+  <!-- Install prompt for supported browsers, with instructions as a fallback. -->
+  <aside class="install-banner" id="installBanner" role="dialog" aria-label="Install Campus Cart">
+    <svg class="install-mini-logo cart-mark" viewBox="0 0 36 36" aria-hidden="true">
+      <path d="M6 7h3l2.2 12h15.7l2.2-8.5H11" />
+      <path d="M13.5 24.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+      <path d="M29 31c-5.8 3-13.9 3-20 0m1-1-2 1 1.4 2" />
+    </svg>
+    <div class="install-copy">
+      <strong>Install Campus Cart</strong>
+      <p>Add Campus Cart to your phone for quicker access and a full-screen app experience.</p>
+    </div>
+    <div class="install-actions">
+      <button class="install-action" id="dismissInstall" type="button">Not now</button>
+      <button class="install-action primary" id="installApp" type="button">Install</button>
+    </div>
+  </aside>
+
+  <div class="install-help" id="installHelp" hidden>
+    <div class="install-help-card" role="dialog" aria-modal="true" aria-labelledby="installHelpTitle">
+      <h2 id="installHelpTitle">Install Campus Cart on Android</h2>
+      <ol>
+        <li>Open Campus Cart in Chrome or your phone's main browser.</li>
+        <li>Tap the browser menu (usually three dots).</li>
+        <li>Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li>
+        <li>Confirm the installation.</li>
+      </ol>
+      <button class="install-action primary" id="closeInstallHelp" type="button">Got it</button>
+    </div>
+  </div>
+
+  <script>
+    // ====== PWA REGISTRATION AND INSTALL EXPERIENCE ======
+    const installBanner = document.getElementById('installBanner');
+    const installAppButton = document.getElementById('installApp');
+    const dismissInstallButton = document.getElementById('dismissInstall');
+    const installHelp = document.getElementById('installHelp');
+    const closeInstallHelp = document.getElementById('closeInstallHelp');
+    let deferredInstallPrompt = null;
+
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    function showInstallBanner() {
+      if (!isStandalone && sessionStorage.getItem('campusCartInstallDismissed') !== '1') {
+        installBanner.classList.add('show');
+      }
+    }
+
+    function hideInstallBanner() {
+      installBanner.classList.remove('show');
+    }
+
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      installAppButton.textContent = 'Install';
+      showInstallBanner();
+    });
+
+    installAppButton.addEventListener('click', async () => {
+      if (!deferredInstallPrompt) {
+        hideInstallBanner();
+        installHelp.hidden = false;
+        return;
+      }
+
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      hideInstallBanner();
+    });
+
+    dismissInstallButton.addEventListener('click', () => {
+      sessionStorage.setItem('campusCartInstallDismissed', '1');
+      hideInstallBanner();
+    });
+
+    closeInstallHelp.addEventListener('click', () => {
+      installHelp.hidden = true;
+    });
+
+    installHelp.addEventListener('click', event => {
+      if (event.target === installHelp) installHelp.hidden = true;
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      hideInstallBanner();
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(error => {
+          console.error('Campus Cart service worker registration failed:', error);
+        });
+      });
+    }
+
+    window.setTimeout(() => {
+      if (!deferredInstallPrompt) installAppButton.textContent = 'How to install';
+      showInstallBanner();
+    }, 1400);
   </script>
 </body>
-<footer style="background-color: var(--navy); padding: 20px; text-align: center; border-top: 1px solid var(--light-blue); margin-top: 30px;">
-    <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 8px;">
-        &copy; 2026 CampusCart General Dealers. All rights reserved.
-    </p>
-    <a href="privacy-policy.html" style="color: var(--light-blue); text-decoration: none; font-size: 0.9rem; transition: opacity 0.3s;">
-        Privacy Policy
-    </a>
-    
-    
-</footer>
 </html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#112240" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <title>Meet the Team | Campus Cart</title>
+  <meta name="description" content="Meet the student team building Campus Cart." />
+  <style>
+    :root {
+      --dark-blue: #0a192f;
+      --navy: #112240;
+      --light-blue: #64ffda;
+      --text-light: #ccd6f6;
+      --text-gray: #8892b0;
+      --border: rgba(100, 255, 218, 0.14);
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+    }
+
+    [data-theme="light"] {
+      --dark-blue: #f4f7fb;
+      --navy: #ffffff;
+      --light-blue: #087f6b;
+      --text-light: #14233c;
+      --text-gray: #5d6b82;
+      --border: rgba(8, 127, 107, 0.18);
+      --shadow: 0 12px 30px rgba(28, 44, 70, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--dark-blue);
+      color: var(--text-light);
+    }
+
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 42px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      min-height: 66px;
+      padding: 8px 14px;
+      background: var(--navy);
+      box-shadow: 0 3px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-link,
+    .theme-toggle {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-light);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .back-link:hover,
+    .theme-toggle:hover {
+      background: rgba(100, 255, 218, 0.1);
+    }
+
+    .back-link svg {
+      width: 25px;
+      height: 25px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .brand-lockup {
+      justify-self: center;
+      display: inline-block;
+      padding-bottom: 8px;
+      color: var(--light-blue);
+      text-decoration: none;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .logo-cart-word {
+      position: relative;
+      display: inline-block;
+    }
+
+    .brand-smile {
+      position: absolute;
+      top: calc(100% - 1px);
+      left: 4%;
+      width: 92%;
+      height: 8px;
+      overflow: visible;
+    }
+
+    .brand-smile path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .theme-toggle {
+      font-size: 1.15rem;
+    }
+
+    main {
+      width: min(1060px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 34px 0 48px;
+    }
+
+    .team-intro {
+      max-width: 720px;
+      margin: 0 auto 26px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--light-blue);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-top: 8px;
+      color: var(--text-light);
+      font-size: clamp(1.8rem, 6vw, 2.65rem);
+      line-height: 1.12;
+    }
+
+    .team-intro > p:last-child {
+      margin-top: 11px;
+      color: var(--text-gray);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .team-card {
+      padding: 27px 18px 23px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--navy);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .team-photo {
+      width: 142px;
+      height: 142px;
+      border: 4px solid var(--light-blue);
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .team-photo.jethro {
+      object-position: 50% 43%;
+    }
+
+    .team-card h2 {
+      margin-top: 15px;
+      color: var(--text-light);
+      font-size: 1.3rem;
+    }
+
+    .team-role {
+      min-height: 42px;
+      margin-top: 7px;
+      color: var(--light-blue);
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .social-links {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(100, 255, 218, 0.36);
+      border-radius: 50%;
+      color: var(--text-light);
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .social-link:hover,
+    .social-link:focus-visible {
+      transform: translateY(-2px);
+      background: var(--light-blue);
+      color: var(--dark-blue);
+      outline: none;
+    }
+
+    .social-link svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .social-link.facebook svg path {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    footer {
+      padding: 20px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--navy);
+      color: var(--text-gray);
+      text-align: center;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 520px) {
+      main {
+        width: min(100% - 20px, 1060px);
+        padding-top: 26px;
+      }
+
+      .page-header {
+        padding-right: 9px;
+        padding-left: 9px;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <a class="back-link" href="index.html" aria-label="Back to the Campus Cart shop">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7M8 12h11" /></svg>
+    </a>
+    <a class="brand-lockup" href="index.html" aria-label="Open the Campus Cart shop">
+      Campus <span class="logo-cart-word">Cart<svg class="brand-smile" viewBox="0 0 48 10" aria-hidden="true"><path d="M3 2.5c11 6 29 6 42 0" /></svg></span>
+    </a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch colour theme">🌙</button>
+  </header>
+
+  <main>
+    <header class="team-intro">
+      <p class="eyebrow">The people behind the platform</p>
+      <h1>Meet the Team Behind Campus Cart</h1>
+      <p>Students working together to make campus life easier while helping local and student-owned businesses grow.</p>
+    </header>
+
+    <section class="team-grid" aria-label="Campus Cart team members">
+      <article class="team-card">
+        <img class="team-photo" src="images/team-conrad.jpg" alt="Conrad, CEO and Chief of Technology" loading="lazy" decoding="async" />
+        <h2>Conrad</h2>
+        <p class="team-role">CEO &amp; Chief of Technology</p>
+        <div class="social-links" aria-label="Conrad's social links">
+          <a class="social-link" href="https://wa.me/260771097239" target="_blank" rel="noopener noreferrer" aria-label="Chat with Conrad on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m5.6 19.2.9-3A8 8 0 1 1 9 19.5l-3.4-.3Z"/><path d="M8.5 7.4c.5-.4 1-.2 1.3.3l1 1.8c.2.4.1.8-.2 1.1l-.7.7c.7 1.5 1.8 2.6 3.3 3.3l.7-.7c.3-.3.8-.4 1.1-.2l1.8 1c.5.3.7.8.3 1.3l-.7.9c-.6.7-1.6.9-2.5.6A10.7 10.7 0 0 1 6.9 10c-.3-.9-.1-1.9.6-2.5l1-.1Z"/></svg></a>
+          <a class="social-link" href="https://www.instagram.com/conrad_m9?igsi=ZnBudXRybnNqZnh4" target="_blank" rel="noopener noreferrer" aria-label="View Conrad on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="social-link facebook" href="https://www.facebook.com/conrad.michelo" target="_blank" rel="noopener noreferrer" aria-label="View Conrad on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.4l.6-4h-4V9c0-.7.3-1 1-1Z"/></svg></a>
+        </div>
+      </article>
+
+      <article class="team-card">
+        <img class="team-photo" src="images/team-albert.jpg" alt="Albert, Head of Marketing and Brand" loading="lazy" decoding="async" />
+        <h2>Albert</h2>
+        <p class="team-role">Co-Founder, Head of Marketing &amp; Brand</p>
+        <div class="social-links" aria-label="Albert's social links">
+          <a class="social-link" href="https://wa.me/260766136083" target="_blank" rel="noopener noreferrer" aria-label="Chat with Albert on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m5.6 19.2.9-3A8 8 0 1 1 9 19.5l-3.4-.3Z"/><path d="M8.5 7.4c.5-.4 1-.2 1.3.3l1 1.8c.2.4.1.8-.2 1.1l-.7.7c.7 1.5 1.8 2.6 3.3 3.3l.7-.7c.3-.3.8-.4 1.1-.2l1.8 1c.5.3.7.8.3 1.3l-.7.9c-.6.7-1.6.9-2.5.6A10.7 10.7 0 0 1 6.9 10c-.3-.9-.1-1.9.6-2.5l1-.1Z"/></svg></a>
+          <a class="social-link facebook" href="https://www.facebook.com/albert.chama.566" target="_blank" rel="noopener noreferrer" aria-label="View Albert on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.4l.6-4h-4V9c0-.7.3-1 1-1Z"/></svg></a>
+        </div>
+      </article>
+
+      <article class="team-card">
+        <img class="team-photo jethro" src="images/team-jethro.jpg" alt="Jethro, Chief Operating Officer" loading="lazy" decoding="async" />
+        <h2>Jethro</h2>
+        <p class="team-role">Co-Founder, Chief Operating Officer (COO)</p>
+        <div class="social-links" aria-label="Jethro's social links">
+          <a class="social-link" href="https://wa.me/260770465290" target="_blank" rel="noopener noreferrer" aria-label="Chat with Jethro on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m5.6 19.2.9-3A8 8 0 1 1 9 19.5l-3.4-.3Z"/><path d="M8.5 7.4c.5-.4 1-.2 1.3.3l1 1.8c.2.4.1.8-.2 1.1l-.7.7c.7 1.5 1.8 2.6 3.3 3.3l.7-.7c.3-.3.8-.4 1.1-.2l1.8 1c.5.3.7.8.3 1.3l-.7.9c-.6.7-1.6.9-2.5.6A10.7 10.7 0 0 1 6.9 10c-.3-.9-.1-1.9.6-2.5l1-.1Z"/></svg></a>
+          <a class="social-link" href="https://www.instagram.com/muyemba_jethro?igsi=aDRmeXQ3anAzc3k0" target="_blank" rel="noopener noreferrer" aria-label="View Jethro on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </article>
+
+      <article class="team-card">
+        <img class="team-photo" src="images/team-jimmy.jpg" alt="Jimmy, Product and Sales Manager" loading="lazy" decoding="async" />
+        <h2>Jimmy</h2>
+        <p class="team-role">Co-Founder, Product &amp; Sales Manager</p>
+        <div class="social-links" aria-label="Jimmy's social links">
+          <a class="social-link" href="https://wa.me/260976536661" target="_blank" rel="noopener noreferrer" aria-label="Chat with Jimmy on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m5.6 19.2.9-3A8 8 0 1 1 9 19.5l-3.4-.3Z"/><path d="M8.5 7.4c.5-.4 1-.2 1.3.3l1 1.8c.2.4.1.8-.2 1.1l-.7.7c.7 1.5 1.8 2.6 3.3 3.3l.7-.7c.3-.3.8-.4 1.1-.2l1.8 1c.5.3.7.8.3 1.3l-.7.9c-.6.7-1.6.9-2.5.6A10.7 10.7 0 0 1 6.9 10c-.3-.9-.1-1.9.6-2.5l1-.1Z"/></svg></a>
+          <a class="social-link facebook" href="https://www.facebook.com/profile.php?id=100078160946080" target="_blank" rel="noopener noreferrer" aria-label="View Jimmy on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.4l.6-4h-4V9c0-.7.3-1 1-1Z"/></svg></a>
+        </div>
+      </article>
+
+      <article class="team-card">
+        <img class="team-photo" src="images/team-wachi.jpg" alt="Wachi, Marketing and Delivery Partners Manager" loading="lazy" decoding="async" />
+        <h2>Wachi</h2>
+        <p class="team-role">Co-Founder, Marketing &amp; Delivery Partners Manager</p>
+        <div class="social-links" aria-label="Wachi's social links">
+          <a class="social-link" href="https://wa.me/260769012242" target="_blank" rel="noopener noreferrer" aria-label="Chat with Wachi on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m5.6 19.2.9-3A8 8 0 1 1 9 19.5l-3.4-.3Z"/><path d="M8.5 7.4c.5-.4 1-.2 1.3.3l1 1.8c.2.4.1.8-.2 1.1l-.7.7c.7 1.5 1.8 2.6 3.3 3.3l.7-.7c.3-.3.8-.4 1.1-.2l1.8 1c.5.3.7.8.3 1.3l-.7.9c-.6.7-1.6.9-2.5.6A10.7 10.7 0 0 1 6.9 10c-.3-.9-.1-1.9.6-2.5l1-.1Z"/></svg></a>
+          <a class="social-link" href="https://www.instagram.com/wachimwasembe?igsi=ZnlnZnYzeHkya3V5" target="_blank" rel="noopener noreferrer" aria-label="View Wachi on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="social-link facebook" href="https://www.facebook.com/victor.mwasembe" target="_blank" rel="noopener noreferrer" aria-label="View Wachi on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.4l.6-4h-4V9c0-.7.3-1 1-1Z"/></svg></a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>&copy; 2026 CampusCart General Dealers. All rights reserved.</footer>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+
+    applyTheme(savedTheme);
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', nextTheme);
+      applyTheme(nextTheme);
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+    }
+  </script>
+</body>
+</html>
