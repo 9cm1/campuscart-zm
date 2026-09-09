@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#64ffda" />
-    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <meta name="theme-color" content="#112240" />
+    <link rel="apple-touch-icon" href="icons/apple-icon-180x180.png" />
+    <script src="pwa.js"></script>
     <title>Privacy Policy - CampusCart</title>
 
     <!-- Google tag (gtag.js) -->
@@ -187,7 +188,7 @@
 
     <script>
         // Theme toggle
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedTheme = CampusCartStorage.get('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
 
         // Light Theme

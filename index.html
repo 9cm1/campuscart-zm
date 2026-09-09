@@ -4,8 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#64ffda" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta name="theme-color" content="#112240" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="icon" type="image/png" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/apple-icon-180x180.png" />
+  <script src="pwa.js"></script>
   <title>CampusCart</title>
   <meta name="description" content="Shop groceries, meals, essentials and student businesses with Campus Cart." />
 
@@ -830,6 +834,7 @@
     .logo {
       display: block;
       color: inherit;
+      font-size: 1.35rem;
       font-size: clamp(1.18rem, 5vw, 1.55rem);
       font-weight: 800;
       letter-spacing: -0.04em;
@@ -846,16 +851,13 @@
       top: calc(100% - 1px);
       left: 4%;
       width: 92%;
-      height: 8px;
+      height: 14px;
       overflow: visible;
     }
 
     .brand-smile path {
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 3;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      fill: currentColor;
+      stroke: none;
     }
 
     .header-controls {
@@ -879,14 +881,17 @@
     }
 
     .cart-mark {
-      width: 30px;
-      height: 30px;
+      width: 36px;
+      height: 36px;
+      display: block;
       fill: none;
       stroke: currentColor;
       stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+
+    [data-theme="light"] .cart-mark { filter: brightness(.45) saturate(1.2); }
 
     .cart-count {
       top: -2px;
@@ -964,6 +969,10 @@
 
     .menu-overlay {
       position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       inset: 0;
       z-index: 1200;
       background: rgba(0, 0, 0, 0.58);
@@ -978,6 +987,8 @@
     }
 
     .menu-drawer {
+      width: 86vw;
+      max-width: 360px;
       width: min(86vw, 360px);
       height: 100%;
       overflow-y: auto;
@@ -1069,7 +1080,8 @@
     .restaurant-menu-heading[hidden],
     .no-results[hidden],
     .team-view[hidden],
-    .install-help[hidden] {
+    .install-banner[hidden],
+    .app-status[hidden] {
       display: none !important;
     }
 
@@ -1309,8 +1321,9 @@
       grid-column: 1 / -1;
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
     }
+
+    .install-action + .install-action { margin-left: 8px; }
 
     .install-action {
       min-height: 36px;
@@ -1328,34 +1341,15 @@
       color: var(--dark-blue);
     }
 
-    .install-help {
-      position: fixed;
-      inset: 0;
-      z-index: 1400;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.68);
-    }
-
-    .install-help-card {
-      width: min(100%, 420px);
-      padding: 20px;
-      border-radius: 16px;
-      background: var(--navy);
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
-    }
-
-    .install-help-card h2 {
-      color: var(--light-blue);
-      font-size: 1.2rem;
-    }
-
-    .install-help-card ol {
-      margin: 14px 0 18px 22px;
+    .app-status {
+      margin: 12px 14px;
+      padding: 12px 16px;
+      border: 1px solid var(--light-blue);
+      border-radius: 10px;
       color: var(--text-light);
-      line-height: 1.65;
+      background: var(--navy);
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
 
     .site-footer {
@@ -1369,8 +1363,7 @@
     [data-theme="light"] .menu-drawer,
     [data-theme="light"] .team-card,
     [data-theme="light"] .restaurant-card,
-    [data-theme="light"] .install-banner,
-    [data-theme="light"] .install-help-card {
+    [data-theme="light"] .install-banner {
       background: var(--navy);
     }
 
@@ -1417,6 +1410,18 @@
         padding-top: 23px;
       }
     }
+    @supports not (display: grid) {
+      .logo-row { display: flex; }
+      .brand-lockup { flex: 1; margin: 0 9px; }
+      .products { display: flex; flex-wrap: wrap; }
+      .product-card { width: calc(50% - 12px); margin: 6px; }
+      .restaurant-grid { display: flex; flex-wrap: wrap; }
+      .restaurant-card { width: calc(50% - 12px); margin: 6px; }
+      .install-banner { display: block; }
+      .install-mini-logo { float: left; }
+      .install-copy { margin-left: 54px; }
+      .install-actions { margin-top: 12px; clear: both; }
+    }
   </style>
 </head>
 
@@ -1431,17 +1436,13 @@
           </button>
 
           <button class="brand-lockup" id="shopBrand" type="button" aria-label="Open Campus Cart shop">
-            <span class="logo">Campus <span class="logo-cart-word">Cart<svg class="brand-smile" viewBox="0 0 48 10" aria-hidden="true"><path d="M3 2.5c11 6 29 6 42 0" /></svg></span></span>
+            <span class="logo">Campus <span class="logo-cart-word">Cart<svg class="brand-smile" viewBox="0 0 48 18" aria-hidden="true"><path d="M45 6C33 13 19 13 9 5l5-1L2 1l3 12 3-5c11 10 26 10 36 3Z" /></svg></span></span>
           </button>
 
           <div class="header-controls">
             <button class="theme-toggle" id="themeToggle" type="button" aria-label="Change colour theme">🌙</button>
             <button class="cart-icon" type="button" aria-label="Open shopping cart">
-              <svg class="cart-mark" viewBox="0 0 36 36" aria-hidden="true">
-                <path d="M6 7h3l2.2 12h15.7l2.2-8.5H11" />
-                <path d="M13.5 24.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
-                <path d="M29 31c-5.8 3-13.9 3-20 0m1-1-2 1 1.4 2" />
-              </svg>
+              <img class="cart-mark" src="icons/cart-mark.svg" width="36" height="36" alt="" aria-hidden="true" />
               <span class="cart-count">0</span>
             </button>
           </div>
@@ -1502,8 +1503,11 @@
 
   <!-- Main catalogue -->
   <main class="container" id="catalogView">
+    <p class="app-status" id="connectionStatus" role="status" hidden>You're offline. Browse saved products and reconnect before sending an order.</p>
+    <p class="app-status" id="installStatus" role="status" hidden></p>
     <section class="restaurant-selector" id="restaurantSelector" hidden>
       <h1 class="section-heading">Choose a Restaurant</h1>
+      <p class="section-subtitle">Select a restaurant to view its menu.</p>
       <div class="restaurant-grid">
         <button class="restaurant-card" type="button" data-restaurant="hungry-lion">
           <img src="images/restaurant-hungry-lion.jpg" alt="Hungry Lion" />
@@ -6081,7 +6085,7 @@
       'regular-beverage': [8,10,15],
       'chocoloco': [0.5,0.8,1,1.5,1.8,1.8,2,3],       
       'low-price': [10,11],
-      'fast-food': [19,27,35],
+      'fast-food': [18,23,30,35],
       'low-cost-light': [ 5, 6, 7,10,15,18,23,28,30 ],
       'snack':[3]
     };
@@ -6267,6 +6271,10 @@ campusOverlayEl.addEventListener('click', (e) => {
 
 // ====== UPDATED sendWhatsAppOrder FUNCTION ======
 function sendWhatsAppOrder(campus) {
+    if (navigator.onLine === false) {
+        alert('You are offline. Please reconnect before sending your order.');
+        return;
+    }
     if (cart.length === 0) {
         alert('Your cart is empty!');
         return;
@@ -6377,13 +6385,13 @@ function sendWhatsAppOrder(campus) {
 
     // Theme toggle
     const themeToggle = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = CampusCartStorage.get('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     themeToggle.textContent = savedTheme === 'dark' ? '🌙' : '🌞';
     themeToggle.addEventListener('click', () => {
       const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
+      CampusCartStorage.set('theme', newTheme);
       themeToggle.textContent = newTheme === 'dark' ? '🌙' : '🌞';
     });
 
@@ -6655,13 +6663,9 @@ assignLowPriceDelivery();
     <p>&copy; 2026 CampusCart General Dealers. All rights reserved.</p>
   </footer>
 
-  <!-- Install prompt for supported browsers, with instructions as a fallback. -->
-  <aside class="install-banner" id="installBanner" role="dialog" aria-label="Install Campus Cart">
-    <svg class="install-mini-logo cart-mark" viewBox="0 0 36 36" aria-hidden="true">
-      <path d="M6 7h3l2.2 12h15.7l2.2-8.5H11" />
-      <path d="M13.5 24.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
-      <path d="M29 31c-5.8 3-13.9 3-20 0m1-1-2 1 1.4 2" />
-    </svg>
+  <!-- Only shown once the browser supplies a real installation event. -->
+  <aside class="install-banner" id="installBanner" role="dialog" aria-label="Install Campus Cart" hidden>
+    <img class="install-mini-logo cart-mark" src="icons/cart-mark.svg" width="42" height="42" alt="" aria-hidden="true" />
     <div class="install-copy">
       <strong>Install Campus Cart</strong>
       <p>Add Campus Cart to your phone for quicker access and a full-screen app experience.</p>
@@ -6672,90 +6676,5 @@ assignLowPriceDelivery();
     </div>
   </aside>
 
-  <div class="install-help" id="installHelp" hidden>
-    <div class="install-help-card" role="dialog" aria-modal="true" aria-labelledby="installHelpTitle">
-      <h2 id="installHelpTitle">Install Campus Cart on Android</h2>
-      <ol>
-        <li>Open Campus Cart in Chrome or your phone's main browser.</li>
-        <li>Tap the browser menu (usually three dots).</li>
-        <li>Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li>
-        <li>Confirm the installation.</li>
-      </ol>
-      <button class="install-action primary" id="closeInstallHelp" type="button">Got it</button>
-    </div>
-  </div>
-
-  <script>
-    // ====== PWA REGISTRATION AND INSTALL EXPERIENCE ======
-    const installBanner = document.getElementById('installBanner');
-    const installAppButton = document.getElementById('installApp');
-    const dismissInstallButton = document.getElementById('dismissInstall');
-    const installHelp = document.getElementById('installHelp');
-    const closeInstallHelp = document.getElementById('closeInstallHelp');
-    let deferredInstallPrompt = null;
-
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-    function showInstallBanner() {
-      if (!isStandalone && sessionStorage.getItem('campusCartInstallDismissed') !== '1') {
-        installBanner.classList.add('show');
-      }
-    }
-
-    function hideInstallBanner() {
-      installBanner.classList.remove('show');
-    }
-
-    window.addEventListener('beforeinstallprompt', event => {
-      event.preventDefault();
-      deferredInstallPrompt = event;
-      installAppButton.textContent = 'Install';
-      showInstallBanner();
-    });
-
-    installAppButton.addEventListener('click', async () => {
-      if (!deferredInstallPrompt) {
-        hideInstallBanner();
-        installHelp.hidden = false;
-        return;
-      }
-
-      deferredInstallPrompt.prompt();
-      await deferredInstallPrompt.userChoice;
-      deferredInstallPrompt = null;
-      hideInstallBanner();
-    });
-
-    dismissInstallButton.addEventListener('click', () => {
-      sessionStorage.setItem('campusCartInstallDismissed', '1');
-      hideInstallBanner();
-    });
-
-    closeInstallHelp.addEventListener('click', () => {
-      installHelp.hidden = true;
-    });
-
-    installHelp.addEventListener('click', event => {
-      if (event.target === installHelp) installHelp.hidden = true;
-    });
-
-    window.addEventListener('appinstalled', () => {
-      deferredInstallPrompt = null;
-      hideInstallBanner();
-    });
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(error => {
-          console.error('Campus Cart service worker registration failed:', error);
-        });
-      });
-    }
-
-    window.setTimeout(() => {
-      if (!deferredInstallPrompt) installAppButton.textContent = 'How to install';
-      showInstallBanner();
-    }, 1400);
-  </script>
 </body>
 </html>
